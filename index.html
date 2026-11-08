@@ -649,10 +649,21 @@ document.getElementById("gate-no").addEventListener("click",()=>{document.getEle
 const row=document.querySelector(`#hours tr[data-day="${new Date().getDay()}"]`); if(row) row.classList.add("today");
 document.getElementById("year").textContent=new Date().getFullYear();
 /* ---------- Réseaux sociaux : ouvrir l'application sur cellulaire ---------- */
-const isMobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const UA=navigator.userAgent;
+const isAndroid=/Android/i.test(UA);
+const isIOS=/iPhone|iPad|iPod/i.test(UA)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
 document.querySelectorAll("a[data-app]").forEach(a=>{
-  if(!isMobile) return;               // ordinateur : le lien web normal
-  a.removeAttribute("target");        // iOS/Android ouvrent l'app plus facilement sans nouvel onglet
+  if(!isAndroid && !isIOS) return;           // ordinateur : lien web normal
+  a.removeAttribute("target");               // même onglet : nécessaire pour que le téléphone ouvre l'app
+  const ig=a.href.includes("instagram.com");
+  if(isAndroid){
+    // Android : lien « intent » qui ouvre l'app, ou le site web si l'app n'est pas installée
+    const u=new URL(a.href), pkg=ig?"com.instagram.android":"com.facebook.katana";
+    a.href="intent://"+u.host+u.pathname+"#Intent;scheme=https;package="+pkg+";S.browser_fallback_url="+encodeURIComponent(u.href)+";end";
+    return;
+  }
+  if(ig) return;                             // iPhone + Instagram : le lien instagram.com ouvre l'app tout seul
+  // iPhone + Facebook : schéma de l'app, puis le site web si rien ne s'ouvre
   a.addEventListener("click",e=>{
     e.preventDefault();
     const web=a.href; let left=false;
