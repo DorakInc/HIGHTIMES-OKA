@@ -1,6 +1,6 @@
 # High Times Oka
 
-Site web de High Times (boutique de cannabis et bar sportif), Kanehsatà:ke · Oka · Québec.
+Site web de High Times (boutique de cannabis et bar sportif), Kanesatake · Oka · Québec.
 
 - `index.html` : le site complet (Accueil, Boutique/Réservations, Sport Bar), FR/EN, vérification d'âge 18+
 - `logo.webp` : logo High Times
