@@ -205,6 +205,7 @@ tr.today td{color:var(--green);font-weight:800}
 
 footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);font-size:.88rem}
 .foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.copy{border-top:1px solid var(--line);margin-top:28px;padding-top:18px}
 .socials{display:flex;gap:10px;flex-wrap:wrap}
 .socials a{color:var(--text);text-decoration:none;border:1px solid var(--line);padding:6px 12px;border-radius:999px;font-size:.85rem}
 
@@ -438,6 +439,9 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
     </div>
     <div class="socials" aria-label="Réseaux sociaux"><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">TikTok</a></div>
   </div>
+  <div class="wrap copy">
+    <p>© <span id="year">2026</span> High Times. <span data-i18n="foot.rights">Tous droits réservés.</span></p>
+  </div>
 </footer>
 
 <script>
@@ -480,7 +484,7 @@ const T = {
     "m.nov":"Nov 2026","m.dec":"Dec 2026",
     "v.eyebrow":"Visit us","v.title":"Hours and directions","v.hnote":"Sample hours, to be confirmed.","v.addr":"Address","v.addrv":"Address to be confirmed · Oka (Kanesatake), QC","v.phone":"Phone","v.mail":"Email","v.tbc":"To be confirmed","v.map":"Open in Google Maps",
     "d.mon":"Monday","d.tue":"Tuesday","d.wed":"Wednesday","d.thu":"Thursday","d.fri":"Friday","d.sat":"Saturday","d.sun":"Sunday",
-    "foot.txt":"Kanesatake · Oka · Québec. 18+ only. Consume responsibly.","priv.text":"This site collects no personal data. Your age confirmation and language choice stay in your browser."
+    "foot.txt":"Kanesatake · Oka · Québec. 18+ only. Consume responsibly.","foot.rights":"All rights reserved.","priv.text":"This site collects no personal data. Your age confirmation and language choice stay in your browser."
   },
   fr:{"gate.sorry":"Désolé, ce site est réservé aux adultes.","add":"Ajouter","added":"Ajouté ✓","stock.ok":"En stock","stock.low":"Presque épuisé",
     "err.empty":"Ajoute au moins un produit.","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone."}
@@ -570,6 +574,7 @@ document.getElementById("gate-yes").addEventListener("click",()=>{store("ht-age"
 document.getElementById("gate-no").addEventListener("click",()=>{document.getElementById("gate-msg").textContent=t("gate.sorry");});
 
 const row=document.querySelector(`#hours tr[data-day="${new Date().getDay()}"]`); if(row) row.classList.add("today");
+document.getElementById("year").textContent=new Date().getFullYear();
 apply(); route();
 </script>
 </body>
