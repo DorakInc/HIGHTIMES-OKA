@@ -156,6 +156,16 @@ section{padding:72px 0;border-top:1px solid var(--line)}
 .field label{font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .field input,.field select{background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:10px 12px;font:500 .95rem var(--body)}
 .cart .btn{width:100%;text-align:center}
+.cal-label{font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cal{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg)}
+.cal-month{font-family:var(--display);text-transform:uppercase;font-size:1.05rem;color:var(--green);margin:4px 2px 6px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal-grid .wd{font-size:.68rem;font-weight:800;color:var(--muted);text-transform:uppercase}
+.cal-grid button{aspect-ratio:1;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;font:700 .88rem var(--body);cursor:pointer;font-variant-numeric:tabular-nums}
+.cal-grid button:hover:not(:disabled){border-color:var(--green)}
+.cal-grid button:disabled{background:none;border-color:transparent;color:#3b5260;cursor:default}
+.cal-grid button[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--bg)}
+.cal-grid button.today:not([aria-pressed="true"]){border-color:var(--cyan)}
 .form-err{color:#f0be46;font-size:.85rem;min-height:1.2em;margin-bottom:6px}
 .confirm{border:1px solid var(--green);border-radius:10px;padding:16px;margin-top:4px;background:rgba(139,224,78,.07)}
 .confirm .code{font-family:var(--display);font-size:2.2rem;color:var(--green);letter-spacing:.06em;line-height:1.1}
@@ -351,8 +361,8 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
               <option value="tomorrow" data-i18n="cart.tomorrow">Demain</option>
               <option value="date" data-i18n="cart.pick">Choisir une date…</option>
             </select></div>
-          <div class="field" id="date-field" hidden><label for="r-date" data-i18n="cart.date">Date de passage</label>
-            <input id="r-date" type="date">
+          <div class="field" id="date-field" hidden><span class="cal-label" id="cal-label" data-i18n="cart.date">Date de passage</span>
+            <div class="cal" id="cal" role="group" aria-labelledby="cal-label"></div>
             <span class="note" data-i18n="cart.limit">Jusqu'à 14 jours d'avance.</span></div>
           <p class="form-err" id="form-err" aria-live="polite"></p>
           <button class="btn g" type="submit" data-i18n="cart.submit">Réserver</button>
@@ -493,7 +503,7 @@ const T = {
     "door.bar.kind":"Sports bar","door.bar.l1":"One giant screen and 40+ TVs","door.bar.l2":"Every game, live","door.bar.l3":"Hockey, football and UFC nights","door.bar.go":"See the bar",
     "info.open":"Open 7 days","info.age":"18+ only","info.lang":"Bilingual service","info.addr":"Address to be confirmed, Oka",
     "shop.title":"Reservations","shop.lead":"Pick your products, reserve them, then come pick them up. You pay at the counter, with ID.","shop.s1":"Add products to your reservation","shop.s2":"Enter your name and pickup time","shop.s3":"Show your code at the counter and pay there","shop.example":"Sample products and stock, to be replaced with the real inventory.",
-    "cart.title":"My reservation","cart.btn":"Cart","cart.empty":"No products yet.","cart.name":"Name","cart.phone":"Phone","cart.when":"Pickup","cart.today":"Today","cart.tomorrow":"Tomorrow","cart.pick":"Choose a date…","cart.date":"Pickup date","cart.limit":"Up to 14 days ahead.","err.date":"Choose a date between today and 14 days from now.","cart.submit":"Reserve","cart.ok":"Reservation ready. Your code:","cart.new":"New reservation","cart.demo":"Demo version: the reservation is not sent to the store yet.",
+    "cart.title":"My reservation","cart.btn":"Cart","cart.empty":"No products yet.","cart.name":"Name","cart.phone":"Phone","cart.when":"Pickup","cart.today":"Today","cart.tomorrow":"Tomorrow","cart.pick":"Choose a date…","cart.date":"Pickup date","cart.limit":"Up to 14 days ahead.","err.date":"Pick a day in the calendar (up to 14 days ahead).","cart.submit":"Reserve","cart.ok":"Reservation ready. Your code:","cart.new":"New reservation","cart.demo":"Demo version: the reservation is not sent to the store yet.",
     "add":"Add","added":"Added ✓","stock.ok":"In stock","stock.low":"Few left",
     "err.empty":"Add at least one product.","err.name":"Enter your name.","err.phone":"Enter your phone number.",
     "about.eyebrow":"The bar","about.title":"Watch any game you want","about.p1":"One giant screen, 40+ TVs throughout the store and bar, and the sound of the game everyone's waiting for. Want a specific game? Ask at the bar and we'll put it on.",
@@ -505,7 +515,7 @@ const T = {
     "foot.txt":"Kanesatake · Oka · Québec. 18+ only. Consume responsibly.","foot.rights":"All rights reserved.","priv.text":"This site collects no personal data. Your age confirmation and language choice stay in your browser."
   },
   fr:{"gate.sorry":"Désolé, ce site est réservé aux adultes.","add":"Ajouter","added":"Ajouté ✓","stock.ok":"En stock","stock.low":"Presque épuisé",
-    "err.empty":"Ajoute au moins un produit.","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone.","err.date":"Choisis une date entre aujourd'hui et dans 14 jours."}
+    "err.empty":"Ajoute au moins un produit.","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone.","err.date":"Choisis une journée dans le calendrier (jusqu'à 14 jours d'avance)."}
 };
 document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n; if(!(k in T.fr)) T.fr[k]=el.textContent;});
 document.querySelectorAll("[data-i18n-html]").forEach(el=>{T.fr[el.dataset.i18nHtml]=el.innerHTML;});
@@ -523,7 +533,7 @@ function apply(){
   document.querySelectorAll("[data-i18n-html]").forEach(el=>{el.innerHTML=t(el.dataset.i18nHtml);});
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
   const msg=document.getElementById("gate-msg"); if(msg.textContent) msg.textContent=t("gate.sorry");
-  renderShop(); renderConfirm();
+  renderShop(); renderConfirm(); if(!dateField.hidden) renderCal();
 }
 document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.l;store("ht-lang",lang);apply();}));
 
@@ -549,12 +559,30 @@ document.getElementById("products").addEventListener("click",e=>{const b=e.targe
 document.getElementById("cart-list").addEventListener("click",e=>{const b=e.target.closest("[data-q]"); if(!b)return; const id=b.dataset.q; cart[id]=(cart[id]||0)+Number(b.dataset.d); if(cart[id]<=0) delete cart[id]; if(cart[id]>5) cart[id]=5; renderShop();});
 
 const form=document.getElementById("resa"), err=document.getElementById("form-err");
-const whenSel=document.getElementById("r-when"), dateIn=document.getElementById("r-date"), dateField=document.getElementById("date-field");
+const whenSel=document.getElementById("r-when"), dateField=document.getElementById("date-field"), calEl=document.getElementById("cal");
+let pickedDate=null;
 function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 function addDays(n){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+n);return d;}
-function setDateLimits(){dateIn.min=ymd(addDays(0));dateIn.max=ymd(addDays(14));}
-setDateLimits();
-whenSel.addEventListener("change",()=>{const show=whenSel.value==="date";dateField.hidden=!show;if(show){setDateLimits();if(!dateIn.value)dateIn.value=dateIn.min;dateIn.focus();}});
+const MAX_DAYS=14;
+function renderCal(){
+  const first=addDays(0), last=addDays(MAX_DAYS), minS=ymd(first), maxS=ymd(last), loc=lang==="fr"?"fr-CA":"en-CA";
+  const wds=lang==="fr"?["D","L","M","M","J","V","S"]:["S","M","T","W","T","F","S"];
+  let html="", cur=new Date(first.getFullYear(),first.getMonth(),1,12);
+  while(cur<=last){
+    const y=cur.getFullYear(), m=cur.getMonth(), days=new Date(y,m+1,0).getDate();
+    html+=`<div class="cal-month">${cur.toLocaleDateString(loc,{month:"long",year:"numeric"})}</div><div class="cal-grid">`+wds.map(w=>`<span class="wd" aria-hidden="true">${w}</span>`).join("");
+    html+="<span></span>".repeat(new Date(y,m,1).getDay());
+    for(let d=1;d<=days;d++){
+      const ds=ymd(new Date(y,m,d,12)), ok=ds>=minS&&ds<=maxS;
+      const label=new Date(y,m,d,12).toLocaleDateString(loc,{weekday:"long",day:"numeric",month:"long"});
+      html+=`<button type="button" data-d="${ds}" ${ok?"":"disabled"} aria-pressed="${pickedDate===ds}" aria-label="${label}" class="${ds===minS?"today":""}">${d}</button>`;
+    }
+    html+="</div>"; cur=new Date(y,m+1,1,12);
+  }
+  calEl.innerHTML=html;
+}
+calEl.addEventListener("click",e=>{const b=e.target.closest("button[data-d]"); if(!b||b.disabled)return; pickedDate=b.dataset.d; err.textContent=""; renderCal(); calEl.querySelector(`[data-d="${pickedDate}"]`).focus();});
+whenSel.addEventListener("change",()=>{const show=whenSel.value==="date";dateField.hidden=!show;if(show){pickedDate=null;renderCal();const b=calEl.querySelector("button:not(:disabled)");if(b)b.focus();}});
 form.addEventListener("submit",e=>{
   e.preventDefault();
   const name=document.getElementById("r-name").value.trim(), phone=document.getElementById("r-phone").value.trim();
@@ -562,7 +590,7 @@ form.addEventListener("submit",e=>{
   if(!name){err.textContent=t("err.name");document.getElementById("r-name").focus();return;}
   if(phone.replace(/\D/g,"").length<10){err.textContent=t("err.phone");document.getElementById("r-phone").focus();return;}
   let pickup=ymd(addDays(whenSel.value==="today"?0:1));
-  if(whenSel.value==="date"){setDateLimits(); const v=dateIn.value; if(!v||v<dateIn.min||v>dateIn.max){err.textContent=t("err.date");dateIn.focus();return;} pickup=v;}
+  if(whenSel.value==="date"){ if(!pickedDate||pickedDate<ymd(addDays(0))||pickedDate>ymd(addDays(MAX_DAYS))){err.textContent=t("err.date");return;} pickup=pickedDate;}
   err.textContent="";
   const code="HT-"+Math.floor(1000+Math.random()*9000);
   lastResa={code,name,when:whenSel.value,pickup,count:Object.values(cart).reduce((a,b)=>a+b,0)};
@@ -579,7 +607,7 @@ function renderConfirm(){
     ? `${lastResa.name} · ${lastResa.count} article(s) · pour le ${when}. Montre ce code au comptoir.`
     : `${lastResa.name} · ${lastResa.count} item(s) · for ${when}. Show this code at the counter.`;
 }
-document.getElementById("new-resa").addEventListener("click",()=>{lastResa=null;for(const k in cart)delete cart[k];form.reset();dateField.hidden=true;form.hidden=false;renderShop();renderConfirm();});
+document.getElementById("new-resa").addEventListener("click",()=>{lastResa=null;for(const k in cart)delete cart[k];form.reset();pickedDate=null;dateField.hidden=true;form.hidden=false;renderShop();renderConfirm();});
 
 /* ---------- Pages (hash) ---------- */
 const views=["accueil","boutique","bar"];
