@@ -347,9 +347,12 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
           <div class="field"><label for="r-phone" data-i18n="cart.phone">Téléphone</label><input id="r-phone" type="tel" autocomplete="tel"></div>
           <div class="field"><label for="r-when" data-i18n="cart.when">Passage prévu</label>
             <select id="r-when">
-              <option value="today" data-i18n="cart.today">Aujourd'hui</option>
               <option value="tomorrow" data-i18n="cart.tomorrow">Demain</option>
+              <option value="date" data-i18n="cart.pick">Choisir une date…</option>
             </select></div>
+          <div class="field" id="date-field" hidden><label for="r-date" data-i18n="cart.date">Date de passage</label>
+            <input id="r-date" type="date">
+            <span class="note" data-i18n="cart.limit">Jusqu'à 7 jours d'avance.</span></div>
           <p class="form-err" id="form-err" aria-live="polite"></p>
           <button class="btn g" type="submit" data-i18n="cart.submit">Réserver</button>
         </form>
@@ -489,7 +492,7 @@ const T = {
     "door.bar.kind":"Sports bar","door.bar.l1":"One giant screen and 40+ TVs","door.bar.l2":"Every game, live","door.bar.l3":"Hockey, football and UFC nights","door.bar.go":"See the bar",
     "info.open":"Open 7 days","info.age":"18+ only","info.lang":"Bilingual service","info.addr":"Address to be confirmed, Oka",
     "shop.title":"Reservations","shop.lead":"Pick your products, reserve them, then come pick them up. You pay at the counter, with ID.","shop.s1":"Add products to your reservation","shop.s2":"Enter your name and pickup time","shop.s3":"Show your code at the counter and pay there","shop.example":"Sample products and stock, to be replaced with the real inventory.",
-    "cart.title":"My reservation","cart.btn":"Cart","cart.empty":"No products yet.","cart.name":"Name","cart.phone":"Phone","cart.when":"Pickup","cart.today":"Today","cart.tomorrow":"Tomorrow","cart.submit":"Reserve","cart.ok":"Reservation ready. Your code:","cart.new":"New reservation","cart.demo":"Demo version: the reservation is not sent to the store yet.",
+    "cart.title":"My reservation","cart.btn":"Cart","cart.empty":"No products yet.","cart.name":"Name","cart.phone":"Phone","cart.when":"Pickup","cart.tomorrow":"Tomorrow","cart.pick":"Choose a date…","cart.date":"Pickup date","cart.limit":"Up to 7 days ahead.","err.date":"Choose a date between tomorrow and 7 days from now.","cart.submit":"Reserve","cart.ok":"Reservation ready. Your code:","cart.new":"New reservation","cart.demo":"Demo version: the reservation is not sent to the store yet.",
     "add":"Add","added":"Added ✓","stock.ok":"In stock","stock.low":"Few left",
     "err.empty":"Add at least one product.","err.name":"Enter your name.","err.phone":"Enter your phone number.",
     "about.eyebrow":"The bar","about.title":"Watch any game you want","about.p1":"One giant screen, 40+ TVs throughout the store and bar, and the sound of the game everyone's waiting for. Want a specific game? Ask at the bar and we'll put it on.",
@@ -501,7 +504,7 @@ const T = {
     "foot.txt":"Kanesatake · Oka · Québec. 18+ only. Consume responsibly.","foot.rights":"All rights reserved.","priv.text":"This site collects no personal data. Your age confirmation and language choice stay in your browser."
   },
   fr:{"gate.sorry":"Désolé, ce site est réservé aux adultes.","add":"Ajouter","added":"Ajouté ✓","stock.ok":"En stock","stock.low":"Presque épuisé",
-    "err.empty":"Ajoute au moins un produit.","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone."}
+    "err.empty":"Ajoute au moins un produit.","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone.","err.date":"Choisis une date entre demain et dans 7 jours."}
 };
 document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n; if(!(k in T.fr)) T.fr[k]=el.textContent;});
 document.querySelectorAll("[data-i18n-html]").forEach(el=>{T.fr[el.dataset.i18nHtml]=el.innerHTML;});
@@ -545,15 +548,23 @@ document.getElementById("products").addEventListener("click",e=>{const b=e.targe
 document.getElementById("cart-list").addEventListener("click",e=>{const b=e.target.closest("[data-q]"); if(!b)return; const id=b.dataset.q; cart[id]=(cart[id]||0)+Number(b.dataset.d); if(cart[id]<=0) delete cart[id]; if(cart[id]>5) cart[id]=5; renderShop();});
 
 const form=document.getElementById("resa"), err=document.getElementById("form-err");
+const whenSel=document.getElementById("r-when"), dateIn=document.getElementById("r-date"), dateField=document.getElementById("date-field");
+function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function addDays(n){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+n);return d;}
+function setDateLimits(){dateIn.min=ymd(addDays(1));dateIn.max=ymd(addDays(7));}
+setDateLimits();
+whenSel.addEventListener("change",()=>{const show=whenSel.value==="date";dateField.hidden=!show;if(show){setDateLimits();if(!dateIn.value)dateIn.value=dateIn.min;dateIn.focus();}});
 form.addEventListener("submit",e=>{
   e.preventDefault();
   const name=document.getElementById("r-name").value.trim(), phone=document.getElementById("r-phone").value.trim();
   if(!Object.keys(cart).length){err.textContent=t("err.empty");return;}
   if(!name){err.textContent=t("err.name");document.getElementById("r-name").focus();return;}
   if(phone.replace(/\D/g,"").length<10){err.textContent=t("err.phone");document.getElementById("r-phone").focus();return;}
+  let pickup=ymd(addDays(1));
+  if(whenSel.value==="date"){setDateLimits(); const v=dateIn.value; if(!v||v<dateIn.min||v>dateIn.max){err.textContent=t("err.date");dateIn.focus();return;} pickup=v;}
   err.textContent="";
   const code="HT-"+Math.floor(1000+Math.random()*9000);
-  lastResa={code,name,when:document.getElementById("r-when").value,count:Object.values(cart).reduce((a,b)=>a+b,0)};
+  lastResa={code,name,when:whenSel.value,pickup,count:Object.values(cart).reduce((a,b)=>a+b,0)};
   form.hidden=true; renderConfirm();
 });
 function renderConfirm(){
@@ -561,12 +572,13 @@ function renderConfirm(){
   if(!lastResa){box.hidden=true;return;}
   box.hidden=false;
   document.getElementById("code").textContent=lastResa.code;
-  const when=lastResa.when==="today"?t("cart.today"):t("cart.tomorrow");
+  const [y,mo,d]=lastResa.pickup.split("-").map(Number);
+  const when=new Date(y,mo-1,d).toLocaleDateString(lang==="fr"?"fr-CA":"en-CA",{weekday:"long",day:"numeric",month:"long"});
   document.getElementById("confirm-txt").textContent= lang==="fr"
-    ? `${lastResa.name} · ${lastResa.count} article(s) · ${when.toLowerCase()}. Montre ce code au comptoir.`
-    : `${lastResa.name} · ${lastResa.count} item(s) · ${when.toLowerCase()}. Show this code at the counter.`;
+    ? `${lastResa.name} · ${lastResa.count} article(s) · pour le ${when}. Montre ce code au comptoir.`
+    : `${lastResa.name} · ${lastResa.count} item(s) · for ${when}. Show this code at the counter.`;
 }
-document.getElementById("new-resa").addEventListener("click",()=>{lastResa=null;for(const k in cart)delete cart[k];form.reset();form.hidden=false;renderShop();renderConfirm();});
+document.getElementById("new-resa").addEventListener("click",()=>{lastResa=null;for(const k in cart)delete cart[k];form.reset();dateField.hidden=true;form.hidden=false;renderShop();renderConfirm();});
 
 /* ---------- Pages (hash) ---------- */
 const views=["accueil","boutique","bar"];
