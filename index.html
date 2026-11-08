@@ -121,8 +121,7 @@ section{padding:72px 0;border-top:1px solid var(--line)}
 .steps div{background:var(--panel);padding:18px}
 .steps b{font-family:var(--display);font-weight:400;font-size:2rem;color:var(--green);line-height:1;display:block}
 @media (max-width:640px){.steps{grid-template-columns:1fr}}
-.shop-layout{display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:start}
-@media (max-width:900px){.shop-layout{grid-template-columns:1fr}}
+.shop-layout{display:block}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
 .chip{background:none;border:1px solid var(--line);color:var(--text);font:700 .85rem var(--body);padding:7px 14px;border-radius:999px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--bg)}
@@ -136,8 +135,18 @@ section{padding:72px 0;border-top:1px solid var(--line)}
 .stock.low{background:rgba(240,190,70,.15);color:#f0be46}
 .prod button{margin-top:auto}
 .prod button[aria-pressed="true"]{background:none;color:var(--green)}
-.cart{position:sticky;top:90px;background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--green);border-radius:12px;padding:20px}
-.cart h3{font-size:1.6rem}
+.cart{position:fixed;top:0;right:0;z-index:60;height:100%;width:min(400px,100%);overflow-y:auto;background:var(--panel);border-left:1px solid var(--line);border-top:4px solid var(--green);padding:22px 22px 32px;transform:translateX(105%);transition:transform .25s ease,visibility 0s .25s;visibility:hidden}
+.cart.open{transform:none;visibility:visible;transition:transform .25s ease}
+.cart-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.cart h3{font-size:1.6rem;margin:0}
+.cart-close{background:none;border:1px solid var(--line);color:var(--text);border-radius:50%;width:36px;height:36px;font-size:1.1rem;cursor:pointer}
+.backdrop{position:fixed;inset:0;z-index:55;background:rgba(3,10,14,.6)}
+.cart-btn{position:relative;display:inline-flex;align-items:center;gap:8px;background:var(--green);color:var(--bg);border:0;border-radius:999px;padding:8px 14px;font:800 .85rem var(--body);cursor:pointer}
+.cart-btn .count{background:var(--bg);color:var(--green);border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center;font-size:.75rem;padding:0 6px}
+.cart-btn.bump{animation:bump .35s}
+@keyframes bump{50%{transform:scale(1.12)}}
+@media (max-width:420px){.cart-btn .lbl{display:none}}
+@media (prefers-reduced-motion:reduce){.cart{transition:none}.cart-btn.bump{animation:none}}
 .cart-list{list-style:none;margin:12px 0;display:grid;gap:8px}
 .cart-list li{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding-bottom:8px;font-size:.92rem}
 .qty{display:inline-flex;align-items:center;gap:6px}
@@ -253,6 +262,10 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
     </nav>
     <div class="tools">
       <div class="lang" role="group" aria-label="Langue / Language"><button data-l="fr" aria-pressed="true">FR</button><button data-l="en" aria-pressed="false">EN</button></div>
+      <button class="cart-btn" id="cart-btn" aria-controls="cart" aria-expanded="false" hidden>
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11h11l2-8H6.3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="9" cy="19.5" r="1.6" fill="currentColor"/><circle cx="17" cy="19.5" r="1.6" fill="currentColor"/></svg>
+        <span class="lbl" data-i18n="cart.btn">Panier</span><span class="count" id="cart-count">0</span>
+      </button>
       <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
     </div>
   </div>
@@ -325,8 +338,8 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
         <div class="products" id="products"></div>
         <p class="note" style="margin-top:14px" data-i18n="shop.example">Produits et disponibilités d'exemple, à remplacer par l'inventaire réel.</p>
       </div>
-      <aside class="cart" aria-labelledby="cart-title">
-        <h3 id="cart-title" data-i18n="cart.title">Ma réservation</h3>
+      <aside class="cart" id="cart" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+        <div class="cart-head"><h3 id="cart-title" data-i18n="cart.title">Ma réservation</h3><button class="cart-close" id="cart-close" aria-label="Fermer">✕</button></div>
         <ul class="cart-list" id="cart-list"></ul>
         <p class="empty" id="cart-empty" data-i18n="cart.empty">Aucun produit pour l'instant.</p>
         <form id="resa" novalidate>
@@ -348,6 +361,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
         </div>
         <p class="demo" data-i18n="cart.demo">Version démo : la réservation n'est pas encore envoyée au magasin.</p>
       </aside>
+      <div class="backdrop" id="backdrop" hidden></div>
     </div>
   </section>
   <div class="marquee" aria-hidden="true"><div class="track"><span>Réserve · Récupère · Profite · Reserve · Pick up · Enjoy · </span><span>Réserve · Récupère · Profite · Reserve · Pick up · Enjoy · </span><span>Réserve · Récupère · Profite · Reserve · Pick up · Enjoy · </span><span>Réserve · Récupère · Profite · Reserve · Pick up · Enjoy · </span></div></div>
@@ -475,7 +489,7 @@ const T = {
     "door.bar.kind":"Sports bar","door.bar.l1":"One giant screen and 40+ TVs","door.bar.l2":"Every game, live","door.bar.l3":"Hockey, football and UFC nights","door.bar.go":"See the bar",
     "info.open":"Open 7 days","info.age":"18+ only","info.lang":"Bilingual service","info.addr":"Address to be confirmed, Oka",
     "shop.title":"Reservations","shop.lead":"Pick your products, reserve them, then come pick them up. You pay at the counter, with ID.","shop.s1":"Add products to your reservation","shop.s2":"Enter your name and pickup time","shop.s3":"Show your code at the counter and pay there","shop.example":"Sample products and stock, to be replaced with the real inventory.",
-    "cart.title":"My reservation","cart.empty":"No products yet.","cart.name":"Name","cart.phone":"Phone","cart.when":"Pickup","cart.today":"Today","cart.tomorrow":"Tomorrow","cart.submit":"Reserve","cart.ok":"Reservation ready. Your code:","cart.new":"New reservation","cart.demo":"Demo version: the reservation is not sent to the store yet.",
+    "cart.title":"My reservation","cart.btn":"Cart","cart.empty":"No products yet.","cart.name":"Name","cart.phone":"Phone","cart.when":"Pickup","cart.today":"Today","cart.tomorrow":"Tomorrow","cart.submit":"Reserve","cart.ok":"Reservation ready. Your code:","cart.new":"New reservation","cart.demo":"Demo version: the reservation is not sent to the store yet.",
     "add":"Add","added":"Added ✓","stock.ok":"In stock","stock.low":"Few left",
     "err.empty":"Add at least one product.","err.name":"Enter your name.","err.phone":"Enter your phone number.",
     "about.eyebrow":"The bar","about.title":"Watch any game you want","about.p1":"One giant screen, 40+ TVs throughout the store and bar, and the sound of the game everyone's waiting for. Want a specific game? Ask at the bar and we'll put it on.",
@@ -521,12 +535,13 @@ function renderShop(){
       <span class="stock ${p.stock}">${t("stock."+p.stock)}</span>
       <button class="btn g" data-add="${p.id}" aria-pressed="${inCart}">${inCart?t("added"):t("add")}</button></div>`;}).join("");
   const ids=Object.keys(cart);
+  document.getElementById("cart-count").textContent=Object.values(cart).reduce((a,b)=>a+b,0);
   document.getElementById("cart-empty").hidden=ids.length>0;
   document.getElementById("cart-list").innerHTML=ids.map(id=>{const p=PRODUCTS.find(x=>x.id===id);
     return `<li><span>${esc(p.name)}<br><span class="note">${p[lang]}</span></span><span class="qty"><button data-q="${id}" data-d="-1" aria-label="−">−</button><b>${cart[id]}</b><button data-q="${id}" data-d="1" aria-label="+">+</button></span></li>`;}).join("");
 }
 document.getElementById("chips").addEventListener("click",e=>{const b=e.target.closest("[data-c]"); if(!b)return; filter=b.dataset.c; renderShop();});
-document.getElementById("products").addEventListener("click",e=>{const b=e.target.closest("[data-add]"); if(!b)return; const id=b.dataset.add; if(cart[id]) delete cart[id]; else cart[id]=1; renderShop();});
+document.getElementById("products").addEventListener("click",e=>{const b=e.target.closest("[data-add]"); if(!b)return; const id=b.dataset.add; if(cart[id]) delete cart[id]; else cart[id]=1; renderShop(); const cb=document.getElementById("cart-btn"); cb.classList.remove("bump"); void cb.offsetWidth; cb.classList.add("bump");});
 document.getElementById("cart-list").addEventListener("click",e=>{const b=e.target.closest("[data-q]"); if(!b)return; const id=b.dataset.q; cart[id]=(cart[id]||0)+Number(b.dataset.d); if(cart[id]<=0) delete cart[id]; if(cart[id]>5) cart[id]=5; renderShop();});
 
 const form=document.getElementById("resa"), err=document.getElementById("form-err");
@@ -562,7 +577,16 @@ function route(){
   document.querySelectorAll("nav a").forEach(a=>{ if(a.getAttribute("href")==="#"+v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   window.scrollTo(0,0);
   nav.classList.remove("open"); mb.setAttribute("aria-expanded","false");
+  document.getElementById("cart-btn").hidden = v!=="boutique";
+  if(v!=="boutique") closeCart();
 }
+const cartEl=document.getElementById("cart"), cartBtn=document.getElementById("cart-btn"), backdrop=document.getElementById("backdrop");
+function openCart(){cartEl.classList.add("open");backdrop.hidden=false;cartBtn.setAttribute("aria-expanded","true");setTimeout(()=>document.getElementById("cart-close").focus(),50);}
+function closeCart(){if(!cartEl.classList.contains("open"))return;cartEl.classList.remove("open");backdrop.hidden=true;cartBtn.setAttribute("aria-expanded","false");cartBtn.focus();}
+cartBtn.addEventListener("click",openCart);
+document.getElementById("cart-close").addEventListener("click",closeCart);
+backdrop.addEventListener("click",closeCart);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCart();});
 const nav=document.getElementById("nav"), mb=document.getElementById("menu-btn");
 mb.addEventListener("click",()=>{const o=nav.classList.toggle("open");mb.setAttribute("aria-expanded",o);});
 window.addEventListener("hashchange",route);
