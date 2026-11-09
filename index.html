@@ -211,8 +211,18 @@ a.landing-info-addr:hover{border-color:var(--cyan)}
 /* ===== BOUTIQUE ===== */
 .page-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(60,200,228,.10),transparent 70%),var(--bg)}
 .page-bg .intro-rows{opacity:.11}
+/* Restaurant : tons orangés */
+.page-bg.t-resto{background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(245,166,35,.12),transparent 70%),var(--bg)}
+.page-bg.t-resto .intro-rows .r span{-webkit-text-stroke-color:var(--amber)}
+.page-bg.t-resto .intro-rows .r:nth-child(3n+2) span{-webkit-text-stroke-color:#ffd27a}
+.page-bg.t-resto .intro-rows .r:nth-child(3n) span{color:rgba(245,166,35,.45);-webkit-text-stroke:0}
+/* Barbier : rouge, blanc, bleu */
+.page-bg.t-barber{background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(255,90,95,.12),transparent 70%),var(--bg)}
+.page-bg.t-barber .intro-rows .r span{-webkit-text-stroke-color:var(--red)}
+.page-bg.t-barber .intro-rows .r:nth-child(3n+2) span{-webkit-text-stroke-color:#5b8cff}
+.page-bg.t-barber .intro-rows .r:nth-child(3n) span{color:rgba(234,243,245,.4);-webkit-text-stroke:0}
 body.has-page-bg{background:transparent}
-body.has-page-bg main[data-view="boutique"] ~ #visiter,body.has-page-bg footer{background:var(--bg)}
+body.has-page-bg #visiter,body.has-page-bg footer{background:var(--bg)}
 
 .shop-hero{padding:48px 0 30px;background:radial-gradient(ellipse 60% 60% at 15% 0%,rgba(139,224,78,.13),transparent 70%)}
 .shop-hero h1{font-size:clamp(3rem,9vw,6rem);color:var(--green)}
@@ -231,17 +241,24 @@ body.has-page-bg main[data-view="boutique"] ~ #visiter,body.has-page-bg footer{b
 .no-results{grid-column:1/-1;text-align:center;color:var(--muted);padding:30px 10px;border:1px dashed var(--line);border-radius:12px}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
 .chip{background:none;border:1px solid var(--line);color:var(--text);font:700 .85rem var(--body);padding:7px 14px;border-radius:999px;cursor:pointer}
-.chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--bg)}
+.chip{--c:var(--text)}
+.chip[data-c="fleur"]{--c:#8be04e}.chip[data-c="preroll"]{--c:#f7c948}.chip[data-c="vape"]{--c:#b68cff}.chip[data-c="comestible"]{--c:#ff7eb6}.chip[data-c="accessoire"]{--c:#5fb3ff}
+.chip:not([data-c="all"]){border-color:color-mix(in srgb,var(--c) 45%,var(--line))}
+.chip:not([data-c="all"])::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:7px;vertical-align:1px}
+.chip[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:var(--bg)}
+.chip[aria-pressed="true"]::before{background:var(--bg)}
 .products{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
-.prod{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:6px}
-.prod .cat{font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+.prod{--c:var(--green);background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:6px}
+.prod[data-cat="fleur"]{--c:#8be04e}.prod[data-cat="preroll"]{--c:#f7c948}.prod[data-cat="vape"]{--c:#b68cff}.prod[data-cat="comestible"]{--c:#ff7eb6}.prod[data-cat="accessoire"]{--c:#5fb3ff}
+.prod .btn.g{background:var(--c);border-color:var(--c)}
+.prod .cat{font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--c)}
 .prod h3{font-size:1.3rem;margin:0}
 .prod .meta{font-size:.85rem;color:var(--muted)}
 .stock{font-size:.75rem;font-weight:800;align-self:flex-start;padding:3px 8px;border-radius:999px}
 .stock.ok{background:rgba(139,224,78,.15);color:var(--green)}
 .stock.low{background:rgba(240,190,70,.15);color:#f0be46}
 .prod button{margin-top:auto}
-.prod button[aria-pressed="true"]{background:none;color:var(--green)}
+.prod .btn.g[aria-pressed="true"]{background:none;color:var(--c)}
 .cart{position:fixed;top:0;right:0;z-index:60;height:100%;width:min(400px,100%);overflow-y:auto;background:var(--panel);border-left:1px solid var(--line);border-top:4px solid var(--green);padding:22px 22px 32px;transform:translateX(105%);transition:transform .25s ease,visibility 0s .25s;visibility:hidden}
 .cart.open{transform:none;visibility:visible;transition:transform .25s ease}
 .cart-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
@@ -421,7 +438,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
 <!-- ================= ACCUEIL ================= -->
 <main data-view="accueil">
   <div class="intro">
-    <div class="intro-rows" aria-hidden="true"><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div></div>
+    <div class="intro-rows" aria-hidden="true"><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div></div>
     <div class="intro-center">
       <div class="intro-logo"><img src="logo.webp" alt="High Times Cannabis Dispensary · Sport Bar"></div>
       <div class="intro-tag">Cannabis · Sport Bar</div>
@@ -488,7 +505,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
 </main>
 
 <!-- Fond animé (style écran d'ouverture) derrière la boutique -->
-<div class="page-bg" id="page-bg" aria-hidden="true" hidden><div class="intro-rows"><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div></div></div>
+<div class="page-bg" id="page-bg" aria-hidden="true" hidden><div class="intro-rows"><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div><div class="r"><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span><span>High Times · Cannabis · Bar · Restaurant · Barbier · Pizza · Poutine · </span></div></div></div>
 <!-- ================= BOUTIQUE ================= -->
 <main data-view="boutique" class="v-boutique" hidden>
   <div class="shop-hero">
@@ -829,7 +846,7 @@ function renderShop(){
   document.getElementById("products").innerHTML=list.length?"":`<p class="no-results">${t("search.none")} « ${esc(query)} »</p>`;
   document.getElementById("products").innerHTML+=list.map(p=>{
     const cat=CATS.find(c=>c.id===p.cat)[lang]; const inCart=!!cart[p.id];
-    return `<div class="prod"><span class="cat">${cat}</span><h3>${esc(p.name)}</h3><span class="meta">${p[lang]}</span>
+    return `<div class="prod" data-cat="${p.cat}"><span class="cat">${cat}</span><h3>${esc(p.name)}</h3><span class="meta">${p[lang]}</span>
       <span class="stock ${p.stock}">${t("stock."+p.stock)}</span>
       <button class="btn g" data-add="${p.id}" aria-pressed="${inCart}">${inCart?t("added"):t("add")}</button></div>`;}).join("");
   const ids=Object.keys(cart);
@@ -903,8 +920,10 @@ function route(){
   let v=location.hash.slice(1); if(!views.includes(v)) v="accueil";
   document.querySelectorAll("main[data-view]").forEach(m=>m.hidden=m.dataset.view!==v);
   document.getElementById("visiter").hidden = v==="accueil";
-  document.getElementById("page-bg").hidden = v!=="boutique";
-  document.body.classList.toggle("has-page-bg", v==="boutique");
+  const bgTheme={boutique:"",restaurant:"t-resto",barbier:"t-barber"}, pb=document.getElementById("page-bg");
+  pb.hidden = !(v in bgTheme);
+  pb.className = "page-bg" + (bgTheme[v] ? " "+bgTheme[v] : "");
+  document.body.classList.toggle("has-page-bg", v in bgTheme);
   document.querySelectorAll("nav a").forEach(a=>{ if(a.getAttribute("href")==="#"+v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   window.scrollTo(0,0);
   const cur=document.querySelector('nav a[aria-current="page"]'); if(cur&&cur.scrollIntoView) cur.scrollIntoView({block:"nearest",inline:"center"});
