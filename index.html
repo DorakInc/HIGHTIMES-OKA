@@ -258,6 +258,11 @@ body.has-page-bg #visiter,body.has-page-bg footer{background:var(--bg)}
 .stock.ok{background:rgba(139,224,78,.15);color:var(--green)}
 .stock.low{background:rgba(240,190,70,.15);color:#f0be46}
 .prod button{margin-top:auto}
+.pstep{margin-top:auto;display:flex;align-items:center;justify-content:space-between;border:2px solid var(--c);border-radius:999px;padding:4px}
+.pstep button{width:44px;height:44px;border-radius:50%;border:0;background:var(--c);color:var(--bg);font:800 1.3rem var(--body);cursor:pointer;line-height:1}
+.pstep button:disabled{opacity:.35;cursor:default}
+.pstep b{font-size:1.15rem;font-variant-numeric:tabular-nums}
+.qty button:disabled{opacity:.35;cursor:default}
 .prod .btn.g[aria-pressed="true"]{background:none;color:var(--c)}
 .cart{position:fixed;top:0;right:0;z-index:60;height:100%;width:min(400px,100%);overflow-y:auto;background:var(--panel);border-left:1px solid var(--line);border-top:4px solid var(--green);padding:22px 22px 32px;transform:translateX(105%);transition:transform .25s ease,visibility 0s .25s;visibility:hidden}
 .cart.open{transform:none;visibility:visible;transition:transform .25s ease}
@@ -791,7 +796,7 @@ const T = {
     "door.bar.kind":"Sports bar","door.bar.l1":"One giant screen and 40+ TVs","door.bar.l2":"Every game, live","door.bar.l3":"Hockey, football and UFC nights","door.bar.go":"See the bar",
     "info.open":"Open 7 days","info.age":"18+ only","info.lang":"Bilingual service","info.addr":"910 Rang Ste Philomène, Oka",
     "shop.title":"Reservations","shop.lead":"Pick your products, reserve them, then come pick them up. You pay at the counter, with ID.","shop.s1":"Add products to your reservation","shop.s2":"Enter your name and pickup time","shop.s3":"Show your code at the counter and pay there","shop.example":"Sample products and stock, to be replaced with the real inventory.",
-    "cart.title":"My reservation",
+    "cart.title":"My reservation","qty":"Quantity",
     "door.resto.kind":"Restaurant","door.resto.desc":"Burgers, pizzas, wings and poutine to eat during the game.",
     "door.barber.kind":"Barber shop","door.barber.title":"Barber","door.barber.desc":"Haircuts, fades and beard trims.","door.barber.c1":"Haircut","door.barber.c2":"Fade","door.barber.c3":"Beard",
     "menu.bar.eyebrow":"At the bar","menu.bar.title":"What we serve","menu.note":"Sample list. Menu and prices to be confirmed.",
@@ -811,7 +816,7 @@ const T = {
     "foot.txt":"Kanesatake · Oka · Québec. 18+ only. Consume responsibly.","foot.rights":"All rights reserved.","priv.text":"This site collects no personal data. Your age is asked on every visit and is not kept. Only your language choice stays in your browser."
   },
   fr:{"gate.sorry":"Désolé, ce site est réservé aux adultes.","add":"Ajouter","added":"Ajouté ✓","stock.ok":"En stock","stock.low":"Presque épuisé",
-    "err.empty":"Ajoute au moins un produit.","price.tbc":"Prix à venir","search.ph":"Rechercher un produit…","search.none":"Aucun produit trouvé pour","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone.","err.date":"Choisis une journée dans le calendrier (jusqu'à 14 jours d'avance)."}
+    "err.empty":"Ajoute au moins un produit.","qty":"Quantité","price.tbc":"Prix à venir","search.ph":"Rechercher un produit…","search.none":"Aucun produit trouvé pour","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone.","err.date":"Choisis une journée dans le calendrier (jusqu'à 14 jours d'avance)."}
 };
 document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n; if(!(k in T.fr)) T.fr[k]=el.textContent;});
 document.querySelectorAll("[data-i18n-html]").forEach(el=>{T.fr[el.dataset.i18nHtml]=el.innerHTML;});
@@ -848,20 +853,28 @@ function renderShop(){
     const cat=CATS.find(c=>c.id===p.cat)[lang]; const inCart=!!cart[p.id];
     return `<div class="prod" data-cat="${p.cat}"><span class="cat">${cat}</span><h3>${esc(p.name)}</h3><span class="meta">${p[lang]}</span>
       <span class="stock ${p.stock}">${t("stock."+p.stock)}</span>
-      <button class="btn g" data-add="${p.id}" aria-pressed="${inCart}">${inCart?t("added"):t("add")}</button></div>`;}).join("");
+      ${inCart
+        ? `<div class="pstep" role="group" aria-label="${t("qty")}"><button type="button" data-q="${p.id}" data-d="-1" aria-label="−">−</button><b aria-live="polite">${cart[p.id]}</b><button type="button" data-q="${p.id}" data-d="1" aria-label="+" ${cart[p.id]>=MAX_QTY?"disabled":""}>+</button></div>`
+        : `<button class="btn g" data-add="${p.id}">${t("add")}</button>`}</div>`;}).join("");
   const ids=Object.keys(cart);
   document.getElementById("cart-count").textContent=Object.values(cart).reduce((a,b)=>a+b,0);
   document.getElementById("cart-empty").hidden=ids.length>0;
   document.getElementById("cart-list").innerHTML=ids.map(id=>{const p=PRODUCTS.find(x=>x.id===id);
-    return `<li><span>${esc(p.name)}<br><span class="note">${p[lang]}</span></span><span class="qty"><button data-q="${id}" data-d="-1" aria-label="−">−</button><b>${cart[id]}</b><button data-q="${id}" data-d="1" aria-label="+">+</button></span></li>`;}).join("");
+    return `<li><span>${esc(p.name)}<br><span class="note">${p[lang]}</span></span><span class="qty"><button data-q="${id}" data-d="-1" aria-label="−">−</button><b>${cart[id]}</b><button data-q="${id}" data-d="1" aria-label="+" ${cart[id]>=MAX_QTY?"disabled":""}>+</button></span></li>`;}).join("");
 }
 const searchIn=document.getElementById("search");
 searchIn.addEventListener("input",()=>{query=searchIn.value;renderShop();});
 searchIn.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();searchIn.blur();}});
 document.getElementById("search-clear").addEventListener("click",()=>{query="";searchIn.value="";renderShop();searchIn.focus();});
 document.getElementById("chips").addEventListener("click",e=>{const b=e.target.closest("[data-c]"); if(!b)return; filter=b.dataset.c; renderShop();});
-document.getElementById("products").addEventListener("click",e=>{const b=e.target.closest("[data-add]"); if(!b)return; const id=b.dataset.add; if(cart[id]) delete cart[id]; else cart[id]=1; renderShop(); const cb=document.getElementById("cart-btn"); cb.classList.remove("bump"); void cb.offsetWidth; cb.classList.add("bump");});
-document.getElementById("cart-list").addEventListener("click",e=>{const b=e.target.closest("[data-q]"); if(!b)return; const id=b.dataset.q; cart[id]=(cart[id]||0)+Number(b.dataset.d); if(cart[id]<=0) delete cart[id]; if(cart[id]>5) cart[id]=5; renderShop();});
+const MAX_QTY=10;
+function bump(){const cb=document.getElementById("cart-btn"); cb.classList.remove("bump"); void cb.offsetWidth; cb.classList.add("bump");}
+function changeQty(id,d){ cart[id]=Math.min(MAX_QTY,(cart[id]||0)+d); if(cart[id]<=0) delete cart[id]; renderShop(); if(d>0) bump(); }
+document.getElementById("products").addEventListener("click",e=>{
+  const a=e.target.closest("[data-add]"); if(a){changeQty(a.dataset.add,1);return;}
+  const q=e.target.closest("[data-q]"); if(q) changeQty(q.dataset.q,Number(q.dataset.d));
+});
+document.getElementById("cart-list").addEventListener("click",e=>{const b=e.target.closest("[data-q]"); if(b) changeQty(b.dataset.q,Number(b.dataset.d));});
 
 const form=document.getElementById("resa"), err=document.getElementById("form-err");
 const whenSel=document.getElementById("r-when"), dateField=document.getElementById("date-field"), calEl=document.getElementById("cal");
