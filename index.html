@@ -309,6 +309,11 @@ body.has-page-bg #visiter,body.has-page-bg footer{background:var(--bg)}
 .cart-list li{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding-bottom:8px;font-size:.92rem}
 .qty{display:inline-flex;align-items:center;gap:6px}
 .qty button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--text);cursor:pointer;font-weight:800}
+.cart-total{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:2px 10px;margin:4px 0 16px;padding:14px 16px;border-radius:12px;background:rgba(139,224,78,.08);border:1px solid rgba(139,224,78,.35)}
+.cart-total span{font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:.82rem}
+.cart-total b{font-size:1.6rem;font-variant-numeric:tabular-nums;color:var(--green)}
+.cart-total small{grid-column:1/-1;color:var(--muted);font-size:.8rem}
+.line-sub{font-variant-numeric:tabular-nums}
 .empty{color:var(--muted);font-size:.9rem;margin:12px 0}
 .field{display:grid;gap:4px;margin-bottom:10px}
 .field label{font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
@@ -572,6 +577,10 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
         <div class="cart-head"><h3 id="cart-title" data-i18n="cart.title">Ma réservation</h3><button class="cart-close" id="cart-close" aria-label="Fermer">✕</button></div>
         <ul class="cart-list" id="cart-list"></ul>
         <p class="empty" id="cart-empty" data-i18n="cart.empty">Aucun produit pour l'instant.</p>
+        <div class="cart-total" id="cart-total" hidden>
+          <span data-i18n="cart.total">Total</span><b id="cart-total-val"></b>
+          <small data-i18n="cart.total.note">Prix avant taxes. Tu paies au comptoir.</small>
+        </div>
         <form id="resa" novalidate>
           <div class="field"><label for="r-name" data-i18n="cart.name">Nom</label><input id="r-name" autocomplete="name"></div>
           <div class="field"><label for="r-phone" data-i18n="cart.phone">Téléphone</label><input id="r-phone" type="tel" autocomplete="tel"></div>
@@ -821,6 +830,7 @@ const PRODUCTS = [
    desc:{fr:"Moulin en aluminium à 4 pièces avec tamis à pollen et dents en diamant. Se visse solidement et tient dans la poche.",
          en:"4-piece aluminium grinder with a pollen screen and diamond-shaped teeth. Screws tight and fits in a pocket."}, photo:""}
 ];
+function cartTotal(){return Object.entries(cart).reduce((s,[id,q])=>s+PRODUCTS.find(p=>p.id===id).price*q,0);}
 function money(n){return lang==="fr"? n.toFixed(2).replace(".",",")+" $" : "$"+n.toFixed(2);}
 function pct(n){return lang==="fr"? String(n).replace(".",",")+" %" : n+"%";}
 function specs(p){
@@ -876,7 +886,7 @@ const T = {
     "door.bar.kind":"Sports bar","door.bar.l1":"One giant screen and 40+ TVs","door.bar.l2":"Every game, live","door.bar.l3":"Hockey, football and UFC nights","door.bar.go":"See the bar",
     "info.open":"Open 7 days","info.age":"18+ only","info.lang":"Bilingual service","info.addr":"910 Rang Ste Philomène, Oka",
     "shop.title":"Reservations","shop.lead":"Pick your products, reserve them, then come pick them up. You pay at the counter, with ID.","shop.s1":"Add products to your reservation","shop.s2":"In the cart, enter your name and pickup date","shop.s3":"Show your code at the counter and pay there","shop.example":"Sample products, prices and stock, to be replaced with the real inventory.",
-    "cart.title":"My reservation","spec.color":"Colour","spec.nic":"Nicotine","spec.desc":"Description","photo.soon":"Photo coming soon","back.shop":"← Back to the shop","see.detail":"see details","qty":"Quantity",
+    "cart.title":"My reservation","cart.total":"Total","cart.total.note":"Prices before tax. You pay at the counter.","spec.color":"Colour","spec.nic":"Nicotine","spec.desc":"Description","photo.soon":"Photo coming soon","back.shop":"← Back to the shop","see.detail":"see details","qty":"Quantity",
     "door.resto.kind":"Restaurant","door.resto.desc":"Burgers, pizzas, wings and poutine to eat during the game.",
     "door.barber.kind":"Barber shop","door.barber.title":"Barber","door.barber.desc":"Haircuts, fades and beard trims.","door.barber.c1":"Haircut","door.barber.c2":"Fade","door.barber.c3":"Beard",
     "menu.bar.eyebrow":"At the bar","menu.bar.title":"What we serve","menu.note":"Sample list. Menu and prices to be confirmed.",
@@ -940,8 +950,10 @@ function renderShop(){
   const ids=Object.keys(cart);
   document.getElementById("cart-count").textContent=Object.values(cart).reduce((a,b)=>a+b,0);
   document.getElementById("cart-empty").hidden=ids.length>0;
+  document.getElementById("cart-total").hidden=ids.length===0;
+  document.getElementById("cart-total-val").textContent=money(cartTotal());
   document.getElementById("cart-list").innerHTML=ids.map(id=>{const p=PRODUCTS.find(x=>x.id===id);
-    return `<li><span>${esc(p.name)}<br><span class="note">${p[lang]}</span></span><span class="qty"><button data-q="${id}" data-d="-1" aria-label="−">−</button><b>${cart[id]}</b><button data-q="${id}" data-d="1" aria-label="+" ${cart[id]>=MAX_QTY?"disabled":""}>+</button></span></li>`;}).join("");
+    return `<li><span>${esc(p.name)}<br><span class="note">${p[lang]} · ${money(p.price)}</span><br><b class="line-sub">${money(p.price*cart[id])}</b></span><span class="qty"><button data-q="${id}" data-d="-1" aria-label="−">−</button><b>${cart[id]}</b><button data-q="${id}" data-d="1" aria-label="+" ${cart[id]>=MAX_QTY?"disabled":""}>+</button></span></li>`;}).join("");
 }
 const searchIn=document.getElementById("search");
 searchIn.addEventListener("input",()=>{query=searchIn.value;renderShop();});
@@ -996,7 +1008,7 @@ form.addEventListener("submit",e=>{
   if(whenSel.value==="date"){ if(!pickedDate||pickedDate<ymd(addDays(0))||pickedDate>ymd(addDays(MAX_DAYS))){err.textContent=t("err.date");return;} pickup=pickedDate;}
   err.textContent="";
   const code="HT-"+Math.floor(1000+Math.random()*9000);
-  lastResa={code,name,when:whenSel.value,pickup,count:Object.values(cart).reduce((a,b)=>a+b,0)};
+  lastResa={code,name,when:whenSel.value,pickup,count:Object.values(cart).reduce((a,b)=>a+b,0),total:cartTotal()};
   form.hidden=true; renderConfirm();
 });
 function renderConfirm(){
@@ -1007,8 +1019,8 @@ function renderConfirm(){
   const [y,mo,d]=lastResa.pickup.split("-").map(Number);
   const when=new Date(y,mo-1,d).toLocaleDateString(lang==="fr"?"fr-CA":"en-CA",{weekday:"long",day:"numeric",month:"long"});
   document.getElementById("confirm-txt").textContent= lang==="fr"
-    ? `${lastResa.name} · ${lastResa.count} article(s) · pour le ${when}. Montre ce code au comptoir.`
-    : `${lastResa.name} · ${lastResa.count} item(s) · for ${when}. Show this code at the counter.`;
+    ? `${lastResa.name} · ${lastResa.count} article(s) · ${money(lastResa.total)} avant taxes · pour le ${when}. Montre ce code au comptoir.`
+    : `${lastResa.name} · ${lastResa.count} item(s) · ${money(lastResa.total)} before tax · for ${when}. Show this code at the counter.`;
 }
 document.getElementById("new-resa").addEventListener("click",()=>{lastResa=null;for(const k in cart)delete cart[k];form.reset();pickedDate=null;dateField.hidden=true;form.hidden=false;renderShop();renderConfirm();});
 
