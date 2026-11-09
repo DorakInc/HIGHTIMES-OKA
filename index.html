@@ -186,6 +186,11 @@ a.landing-info-addr:hover{border-color:var(--cyan)}
 @media (prefers-reduced-motion:reduce){.door,.door::before,.door .arrow{transition:none}}
 
 /* ===== BOUTIQUE ===== */
+.page-bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(60,200,228,.10),transparent 70%),var(--bg)}
+.page-bg .intro-rows{opacity:.11}
+body.has-page-bg{background:transparent}
+body.has-page-bg main[data-view="boutique"] ~ #visiter,body.has-page-bg footer{background:var(--bg)}
+
 .shop-hero{padding:48px 0 30px;background:radial-gradient(ellipse 60% 60% at 15% 0%,rgba(139,224,78,.13),transparent 70%)}
 .shop-hero h1{font-size:clamp(3rem,9vw,6rem);color:var(--green)}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:26px}
@@ -404,6 +409,8 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
   <div class="marquee" aria-hidden="true"><div class="track"><span>High Times · Cannabis · Sport Bar · Oka · Kanesatake · High Times · Cannabis · Sport Bar · Oka · Kanesatake · </span><span>High Times · Cannabis · Sport Bar · Oka · Kanesatake · High Times · Cannabis · Sport Bar · Oka · Kanesatake · </span></div></div>
 </main>
 
+<!-- Fond animé (style écran d'ouverture) derrière la boutique -->
+<div class="page-bg" id="page-bg" aria-hidden="true" hidden><div class="intro-rows"><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div><div class="r"><span>High Times · Cannabis · Sport Bar · Oka · </span><span>High Times · Cannabis · Sport Bar · Oka · </span></div></div></div>
 <!-- ================= BOUTIQUE ================= -->
 <main data-view="boutique" class="v-boutique" hidden>
   <div class="shop-hero">
@@ -693,6 +700,8 @@ function route(){
   let v=location.hash.slice(1); if(!views.includes(v)) v="accueil";
   document.querySelectorAll("main[data-view]").forEach(m=>m.hidden=m.dataset.view!==v);
   document.getElementById("visiter").hidden = v==="accueil";
+  document.getElementById("page-bg").hidden = v!=="boutique";
+  document.body.classList.toggle("has-page-bg", v==="boutique");
   document.querySelectorAll("nav a").forEach(a=>{ if(a.getAttribute("href")==="#"+v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   window.scrollTo(0,0);
   nav.classList.remove("open"); mb.setAttribute("aria-expanded","false");
