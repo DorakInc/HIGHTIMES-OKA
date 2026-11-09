@@ -579,7 +579,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
         <p class="empty" id="cart-empty" data-i18n="cart.empty">Aucun produit pour l'instant.</p>
         <div class="cart-total" id="cart-total" hidden>
           <span data-i18n="cart.total">Total</span><b id="cart-total-val"></b>
-          <small data-i18n="cart.total.note">Prix avant taxes. Tu paies au comptoir.</small>
+          <small data-i18n="cart.total.note">Tu paies au comptoir.</small>
         </div>
         <form id="resa" novalidate>
           <div class="field"><label for="r-name" data-i18n="cart.name">Nom</label><input id="r-name" autocomplete="name"></div>
@@ -886,7 +886,7 @@ const T = {
     "door.bar.kind":"Sports bar","door.bar.l1":"One giant screen and 40+ TVs","door.bar.l2":"Every game, live","door.bar.l3":"Hockey, football and UFC nights","door.bar.go":"See the bar",
     "info.open":"Open 7 days","info.age":"18+ only","info.lang":"Bilingual service","info.addr":"910 Rang Ste Philomène, Oka",
     "shop.title":"Reservations","shop.lead":"Pick your products, reserve them, then come pick them up. You pay at the counter, with ID.","shop.s1":"Add products to your reservation","shop.s2":"In the cart, enter your name and pickup date","shop.s3":"Show your code at the counter and pay there","shop.example":"Sample products, prices and stock, to be replaced with the real inventory.",
-    "cart.title":"My reservation","cart.total":"Total","cart.total.note":"Prices before tax. You pay at the counter.","spec.color":"Colour","spec.nic":"Nicotine","spec.desc":"Description","photo.soon":"Photo coming soon","back.shop":"← Back to the shop","see.detail":"see details","qty":"Quantity",
+    "cart.title":"My reservation","cart.total":"Total","cart.total.note":"You pay at the counter.","spec.color":"Colour","spec.nic":"Nicotine","spec.desc":"Description","photo.soon":"Photo coming soon","back.shop":"← Back to the shop","see.detail":"see details","qty":"Quantity",
     "door.resto.kind":"Restaurant","door.resto.desc":"Burgers, pizzas, wings and poutine to eat during the game.",
     "door.barber.kind":"Barber shop","door.barber.title":"Barber","door.barber.desc":"Haircuts, fades and beard trims.","door.barber.c1":"Haircut","door.barber.c2":"Fade","door.barber.c3":"Beard",
     "menu.bar.eyebrow":"At the bar","menu.bar.title":"What we serve","menu.note":"Sample list. Menu and prices to be confirmed.",
@@ -1019,8 +1019,8 @@ function renderConfirm(){
   const [y,mo,d]=lastResa.pickup.split("-").map(Number);
   const when=new Date(y,mo-1,d).toLocaleDateString(lang==="fr"?"fr-CA":"en-CA",{weekday:"long",day:"numeric",month:"long"});
   document.getElementById("confirm-txt").textContent= lang==="fr"
-    ? `${lastResa.name} · ${lastResa.count} article(s) · ${money(lastResa.total)} avant taxes · pour le ${when}. Montre ce code au comptoir.`
-    : `${lastResa.name} · ${lastResa.count} item(s) · ${money(lastResa.total)} before tax · for ${when}. Show this code at the counter.`;
+    ? `${lastResa.name} · ${lastResa.count} article(s) · ${money(lastResa.total)} · pour le ${when}. Montre ce code au comptoir.`
+    : `${lastResa.name} · ${lastResa.count} item(s) · ${money(lastResa.total)} · for ${when}. Show this code at the counter.`;
 }
 document.getElementById("new-resa").addEventListener("click",()=>{lastResa=null;for(const k in cart)delete cart[k];form.reset();pickedDate=null;dateField.hidden=true;form.hidden=false;renderShop();renderConfirm();});
 
