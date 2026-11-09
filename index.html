@@ -19,6 +19,8 @@
   --muted:#93aab3;
   --cyan:#3cc8e4;
   --green:#8be04e;
+  --amber:#f5a623;   /* restaurant */
+  --red:#ff5a5f;     /* barbier */
   --display:"Anton","Impact","Arial Narrow Bold",sans-serif;
   --body:"Archivo","Helvetica Neue",Arial,sans-serif;
   color-scheme:dark;
@@ -46,8 +48,8 @@ header{position:sticky;top:0;z-index:20;background:rgba(6,18,26,.92);backdrop-fi
 .logo-slot img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .brand b{font-family:var(--display);font-weight:400;font-size:1.45rem;line-height:1;color:var(--green);display:block}
 .brand small{font-weight:800;font-size:.64rem;letter-spacing:.22em;color:var(--cyan)}
-nav ul{display:flex;gap:6px;list-style:none}
-nav a{color:var(--text);text-decoration:none;font-weight:700;font-size:.9rem;padding:8px 14px;border-radius:999px;display:block}
+nav ul{display:flex;gap:4px;list-style:none}
+nav a{color:var(--text);text-decoration:none;font-weight:700;font-size:.88rem;padding:8px 12px;border-radius:999px;display:block}
 nav a:hover{background:var(--panel)}
 nav a[aria-current="page"]{background:rgba(139,224,78,.1);box-shadow:inset 0 0 0 2px var(--green);color:var(--green)}
 .tools{display:flex;gap:8px;align-items:center}
@@ -61,9 +63,11 @@ nav a[aria-current="page"]{background:rgba(139,224,78,.1);box-shadow:inset 0 0 0
   .bar{flex-wrap:wrap;min-height:0;padding-top:10px;gap:8px 12px}
   .brand .logo-slot{width:40px;height:40px}
   nav{order:3;width:100%;padding-bottom:10px}
-  nav ul{justify-content:space-between;gap:6px}
-  nav li{flex:1}
-  nav a{text-align:center;padding:9px 6px;font-size:.88rem;border:1px solid var(--line)}
+  nav ul{gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:2px 2px 4px;margin:0 -2px}
+  nav ul::-webkit-scrollbar{display:none}
+  nav ul{-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent);padding-right:30px}
+  nav li{flex:none}
+  nav a{text-align:center;padding:9px 14px;font-size:.88rem;border:1px solid var(--line);white-space:nowrap}
   .cart{top:0}
 }
 @media (max-width:420px){.brand b{font-size:1.15rem}.brand small{display:none}}
@@ -151,7 +155,26 @@ section{padding:72px 0;border-top:1px solid var(--line)}
 .door.sport:hover{box-shadow:inset 0 0 0 2px var(--cyan),0 16px 40px rgba(60,200,228,.18)}
 .door .kind{align-self:flex-start;font-weight:800;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:rgba(6,18,26,.7);backdrop-filter:blur(4px)}
 .door.shop .kind{color:var(--green)}.door.sport .kind{color:var(--cyan)}
-.door h2{font-size:clamp(3rem,7vw,5rem);margin:0;line-height:.9}
+.door.food{box-shadow:inset 0 0 0 1px rgba(245,166,35,.25)}
+.door.food::before{background:
+  linear-gradient(180deg,rgba(6,18,26,0) 20%,rgba(6,18,26,.92) 85%),
+  radial-gradient(circle at 75% 25%,rgba(245,166,35,.4),transparent 55%),
+  radial-gradient(circle,rgba(245,166,35,.12) 2px,transparent 3px) 0 0/22px 22px,
+  #22170a}
+.door.food:hover{box-shadow:inset 0 0 0 2px var(--amber),0 16px 40px rgba(245,166,35,.18)}
+.door.food .kind{color:var(--amber)}
+.door.food h2{color:var(--amber)}
+.door.food .arrow{background:var(--amber);color:var(--bg)}
+.door.barber{box-shadow:inset 0 0 0 1px rgba(255,90,95,.25)}
+.door.barber::before{background:
+  linear-gradient(180deg,rgba(6,18,26,0) 20%,rgba(6,18,26,.92) 85%),
+  repeating-linear-gradient(135deg,rgba(255,90,95,.16) 0 14px,rgba(234,243,245,.06) 14px 28px,rgba(60,130,228,.14) 28px 42px,transparent 42px 56px),
+  #1c0f14}
+.door.barber:hover{box-shadow:inset 0 0 0 2px var(--red),0 16px 40px rgba(255,90,95,.18)}
+.door.barber .kind{color:var(--red)}
+.door.barber h2{color:transparent;-webkit-text-stroke:2px var(--red)}
+.door.barber .arrow{background:var(--red);color:var(--bg)}
+.door h2{font-size:clamp(2.6rem,5.2vw,4.4rem);overflow-wrap:anywhere;margin:0;line-height:.9}
 .door.shop h2{color:var(--green);text-shadow:0 0 30px rgba(139,224,78,.35)}
 .door.sport h2{color:transparent;-webkit-text-stroke:2px var(--cyan);text-shadow:0 0 24px rgba(60,200,228,.5)}
 .door .desc{color:#c9d6db;font-size:.98rem;max-width:34ch}
@@ -179,7 +202,7 @@ a.landing-info-addr:hover{border-color:var(--cyan)}
   .landing-head .lead{font-size:.98rem;margin:0 auto}
   .doors{grid-template-columns:1fr;gap:12px;margin-top:24px}
   .door{min-height:210px;padding:20px;border-radius:18px}
-  .door h2{font-size:clamp(2.6rem,13vw,3.6rem)}
+  .door h2{font-size:clamp(2.2rem,10.5vw,3.4rem);overflow-wrap:anywhere}
   .door .desc{font-size:.92rem}
   .door .arrow{width:48px;height:48px}
 }
@@ -293,6 +316,33 @@ body.has-page-bg main[data-view="boutique"] ~ #visiter,body.has-page-bg footer{b
 .time{font-weight:800;white-space:nowrap}
 @media (max-width:620px){.game{grid-template-columns:80px 1fr}.time{grid-column:2}}
 
+/* ===== RESTAURANT / BARBIER ===== */
+.page-hero{padding:40px 0 34px}
+.page-hero h1{font-size:clamp(3rem,10vw,6.5rem)}
+.page-hero .lead{color:var(--muted);margin-top:10px;font-size:1.05rem}
+.v-resto .eyebrow,.v-resto .page-hero h1{color:var(--amber)}
+.v-barber .eyebrow{color:var(--red)}
+.v-barber .page-hero h1{color:transparent;-webkit-text-stroke:2px var(--red)}
+.marquee.amber{background:var(--amber)}
+.marquee.red{background:var(--red)}
+.v-resto .back:hover{background:var(--amber)}
+.v-barber .back:hover{background:var(--red)}
+/* Menu / services list */
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-top:26px}
+.menu-cat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.menu-cat h3{font-size:1.35rem;margin-bottom:10px}
+[data-menu="bar"] .menu-cat h3{color:var(--cyan)}
+[data-menu="restaurant"] .menu-cat h3{color:var(--amber)}
+[data-menu="barbier"] .menu-cat h3{color:var(--red)}
+.menu-cat ul{list-style:none;display:grid}
+.menu-cat li{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-top:1px solid var(--line)}
+.menu-cat li:first-child{border-top:0}
+.menu-cat li b{display:block;font-weight:700}
+.menu-cat li span{display:block;color:var(--muted);font-size:.88rem}
+.menu-cat li .price{flex:none;color:var(--muted);font-size:.85rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.menu-note{margin-top:14px}
+@media (max-width:760px){.page-hero{padding:24px 0 22px}.menu{grid-template-columns:1fr}}
+
 /* Visit (shared) */
 .visit{display:grid;grid-template-columns:1fr 1fr;gap:40px}
 @media (max-width:800px){.visit{grid-template-columns:1fr}}
@@ -332,7 +382,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
   <div class="gate-box">
     <div class="big-logo"><img src="logo.webp" alt="High Times"></div>
     <h2 id="gate-title" data-i18n="gate.title">As-tu 18 ans ou plus ?</h2>
-    <p data-i18n="gate.text">High Times est une boutique de cannabis et un bar sportif. Tu dois avoir l'âge légal pour entrer.</p>
+    <p data-i18n="gate.text">High Times regroupe une boutique de cannabis, un bar sportif, un restaurant et un barbier. Tu dois avoir l'âge légal pour entrer.</p>
     <div class="row">
       <button class="btn g" id="gate-yes" data-i18n="gate.yes">Oui, j'ai 18 ans +</button>
       <button class="btn ghost" id="gate-no" data-i18n="gate.no">Non</button>
@@ -353,6 +403,8 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
         <li><a href="#accueil" data-i18n="nav.home">Accueil</a></li>
         <li><a href="#boutique" data-i18n="nav.shop">Boutique</a></li>
         <li><a href="#bar" data-i18n="nav.bar">Sport Bar</a></li>
+        <li><a href="#restaurant" data-i18n="nav.resto">Restaurant</a></li>
+        <li><a href="#barbier" data-i18n="nav.barber">Barbier</a></li>
       </ul>
     </nav>
     <div class="tools">
@@ -381,7 +433,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
       <div class="landing-head" id="choix">
         <div class="tag">Kanesatake · Oka · Québec</div>
         <h1 data-i18n-html="home.title">Bienvenue chez <span>High Times</span></h1>
-        <p class="lead" data-i18n="home.lead">Une boutique de cannabis et un bar sportif sous un même toit. Où veux-tu aller ?</p>
+        <p class="lead" data-i18n="home.lead">Boutique de cannabis, bar sportif, restaurant et barbier sous un même toit. Où veux-tu aller ?</p>
       </div>
       <div class="doors">
         <a class="door shop" href="#boutique">
@@ -399,6 +451,24 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
           <p class="desc" data-i18n="door.bar.desc">Un écran géant, plus de 40 télés et tous les matchs en direct.</p>
           <div class="row">
             <div class="chips"><span>Hockey</span><span>Football</span><span>UFC</span></div>
+            <span class="arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+        <a class="door food" href="#restaurant">
+          <span class="kind" data-i18n="door.resto.kind">Restaurant</span>
+          <h2>Restaurant</h2>
+          <p class="desc" data-i18n="door.resto.desc">Burgers, pizzas, ailes et poutine, à manger devant le match.</p>
+          <div class="row">
+            <div class="chips"><span>Burgers</span><span>Pizza</span><span>Poutine</span></div>
+            <span class="arrow" aria-hidden="true">→</span>
+          </div>
+        </a>
+        <a class="door barber" href="#barbier">
+          <span class="kind" data-i18n="door.barber.kind">Salon de barbier</span>
+          <h2 data-i18n="door.barber.title">Barbier</h2>
+          <p class="desc" data-i18n="door.barber.desc">Coupes, dégradés et taille de barbe.</p>
+          <div class="row">
+            <div class="chips"><span data-i18n="door.barber.c1">Coupe</span><span data-i18n="door.barber.c2">Dégradé</span><span data-i18n="door.barber.c3">Barbe</span></div>
             <span class="arrow" aria-hidden="true">→</span>
           </div>
         </a>
@@ -526,6 +596,56 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
       <p class="note" style="margin-top:14px" data-i18n="g.note">Exemples de soirées : matchs et heures à confirmer.</p>
     </div>
   </section>
+  <section>
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="menu.bar.eyebrow">Au bar</div>
+      <h2 data-i18n="menu.bar.title">Ce qu'on sert</h2>
+      <div class="menu" data-menu="bar"></div>
+      <p class="note menu-note" data-i18n="menu.note">Liste d'exemple. Le menu et les prix seront confirmés.</p>
+    </div>
+  </section>
+</main>
+
+<!-- ================= RESTAURANT ================= -->
+<main data-view="restaurant" class="v-resto" hidden>
+  <div class="page-hero">
+    <div class="wrap">
+      <a href="#accueil" class="back" data-i18n="back">← Retour à l'accueil</a>
+      <div class="eyebrow">Restaurant</div>
+      <h1>Restaurant</h1>
+      <p class="lead" data-i18n="resto.lead">De quoi manger pendant le match : burgers, pizzas, ailes de poulet, poutine et plus. Sur place ou pour emporter.</p>
+    </div>
+  </div>
+  <div class="marquee amber" aria-hidden="true"><div class="track"><span>Burgers · Pizza · Ailes · Poutine · Nachos · Burgers · Pizza · Ailes · Poutine · Nachos · </span><span>Burgers · Pizza · Ailes · Poutine · Nachos · Burgers · Pizza · Ailes · Poutine · Nachos · </span></div></div>
+  <section>
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="menu.resto.eyebrow">Le menu</div>
+      <h2 data-i18n="menu.resto.title">Ce qu'on cuisine</h2>
+      <div class="menu" data-menu="restaurant"></div>
+      <p class="note menu-note" data-i18n="menu.note">Liste d'exemple. Le menu et les prix seront confirmés.</p>
+    </div>
+  </section>
+</main>
+
+<!-- ================= BARBIER ================= -->
+<main data-view="barbier" class="v-barber" hidden>
+  <div class="page-hero">
+    <div class="wrap">
+      <a href="#accueil" class="back" data-i18n="back">← Retour à l'accueil</a>
+      <div class="eyebrow" data-i18n="door.barber.kind">Salon de barbier</div>
+      <h1 data-i18n="door.barber.title">Barbier</h1>
+      <p class="lead" data-i18n="barber.lead">Coupes, dégradés, taille de barbe et rasage à la serviette chaude, sur place.</p>
+    </div>
+  </div>
+  <div class="marquee red" aria-hidden="true"><div class="track"><span>Coupe · Dégradé · Barbe · Rasage · Fade · Cut · Beard · Shave · </span><span>Coupe · Dégradé · Barbe · Rasage · Fade · Cut · Beard · Shave · </span><span>Coupe · Dégradé · Barbe · Rasage · Fade · Cut · Beard · Shave · </span></div></div>
+  <section>
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="menu.barber.eyebrow">Services</div>
+      <h2 data-i18n="menu.barber.title">Ce qu'on offre</h2>
+      <div class="menu" data-menu="barbier"></div>
+      <p class="note menu-note" data-i18n="barber.note">Liste d'exemple. Les services, les prix et la prise de rendez-vous seront confirmés.</p>
+    </div>
+  </section>
 </main>
 
 <!-- Shared: visit (shown on boutique + bar) -->
@@ -571,6 +691,59 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
 </footer>
 
 <script>
+/* ---------- Menus d'exemple : bar, restaurant, barbier (à remplacer par les vrais) ---------- */
+const MENUS={
+  bar:[
+    {fr:"Bières",en:"Beer",items:[
+      {fr:"Bière en fût",en:"Draft beer",dfr:"Pinte ou pichet",den:"Pint or pitcher"},
+      {fr:"Bières en bouteille et en canette",en:"Bottled and canned beer",dfr:"Sélection québécoise et importée",den:"Quebec and imported selection"},
+      {fr:"Seau de bières",en:"Beer bucket",dfr:"Pour les soirées de match",den:"For game nights"}]},
+    {fr:"Cocktails et alcools",en:"Cocktails and spirits",items:[
+      {fr:"Cocktails maison",en:"House cocktails",dfr:"Classiques et spéciaux du moment",den:"Classics and specials"},
+      {fr:"Shooters",en:"Shooters",dfr:"À l'unité ou en tournée",den:"Single or by the round"},
+      {fr:"Vin",en:"Wine",dfr:"Rouge, blanc, au verre",den:"Red, white, by the glass"},
+      {fr:"Spiritueux",en:"Spirits",dfr:"Whisky, vodka, rhum, tequila",den:"Whisky, vodka, rum, tequila"}]},
+    {fr:"Sans alcool",en:"Non-alcoholic",items:[
+      {fr:"Boissons gazeuses",en:"Soft drinks",dfr:"",den:""},
+      {fr:"Boissons énergisantes",en:"Energy drinks",dfr:"",den:""},
+      {fr:"Café, eau, jus",en:"Coffee, water, juice",dfr:"",den:""}]}
+  ],
+  restaurant:[
+    {fr:"Pour partager",en:"To share",items:[
+      {fr:"Ailes de poulet",en:"Chicken wings",dfr:"Sauce au choix, à la livre",den:"Choice of sauce, by the pound"},
+      {fr:"Nachos",en:"Nachos",dfr:"Fromage, salsa, crème sure",den:"Cheese, salsa, sour cream"},
+      {fr:"Bâtonnets de fromage",en:"Mozzarella sticks",dfr:"",den:""}]},
+    {fr:"Plats",en:"Mains",items:[
+      {fr:"Burgers",en:"Burgers",dfr:"Avec frites",den:"With fries"},
+      {fr:"Pizzas",en:"Pizzas",dfr:"Format individuel ou à partager",den:"Personal or sharing size"},
+      {fr:"Poutines",en:"Poutines",dfr:"Classique ou garnie",den:"Classic or loaded"},
+      {fr:"Club sandwich",en:"Club sandwich",dfr:"",den:""}]},
+    {fr:"À côté",en:"Sides",items:[
+      {fr:"Frites",en:"Fries",dfr:"",den:""},
+      {fr:"Rondelles d'oignon",en:"Onion rings",dfr:"",den:""},
+      {fr:"Salade",en:"Salad",dfr:"",den:""}]}
+  ],
+  barbier:[
+    {fr:"Coupes",en:"Haircuts",items:[
+      {fr:"Coupe homme",en:"Men's haircut",dfr:"Ciseaux ou tondeuse",den:"Scissors or clippers"},
+      {fr:"Dégradé (fade)",en:"Fade",dfr:"Bas, moyen ou haut",den:"Low, mid or high"},
+      {fr:"Coupe enfant",en:"Kids' haircut",dfr:"",den:""},
+      {fr:"Lignes et motifs",en:"Lines and designs",dfr:"",den:""}]},
+    {fr:"Barbe",en:"Beard",items:[
+      {fr:"Taille de barbe",en:"Beard trim",dfr:"Avec contours",den:"With line-up"},
+      {fr:"Rasage à la serviette chaude",en:"Hot towel shave",dfr:"",den:""},
+      {fr:"Coupe + barbe",en:"Haircut + beard",dfr:"Le combo complet",den:"The full combo"}]}
+  ]
+};
+function renderMenus(){
+  document.querySelectorAll("[data-menu]").forEach(el=>{
+    const L=MENUS[el.dataset.menu]; if(!L) return;
+    el.innerHTML=L.map(c=>`<div class="menu-cat"><h3>${c[lang]}</h3><ul>${c.items.map(i=>{
+      const d=lang==="fr"?i.dfr:i.den;
+      return `<li><div><b>${i[lang]}</b>${d?`<span>${d}</span>`:""}</div><span class="price">${t("price.tbc")}</span></li>`;}).join("")}</ul></div>`).join("");
+  });
+}
+
 /* ---------- Produits d'exemple (à remplacer par l'inventaire réel) ---------- */
 const CATS = [
   {id:"all", fr:"Tout", en:"All"},
@@ -594,14 +767,22 @@ const PRODUCTS = [
 
 const T = {
   en:{
-    "gate.title":"Are you 18 or older?","gate.text":"High Times is a cannabis shop and sports bar. You must be of legal age to enter.","gate.yes":"Yes, I'm 18+","gate.no":"No","gate.sorry":"Sorry, this site is for adults only.",
-    "nav.home":"Home","nav.shop":"Shop","nav.bar":"Sports Bar","back":"← Back to home",
-    "intro.scroll":"Scroll","home.title":"Welcome to <span>High Times</span>","home.lead":"A cannabis shop and a sports bar under one roof. Where do you want to go?",
+    "gate.title":"Are you 18 or older?","gate.text":"High Times brings together a cannabis shop, a sports bar, a restaurant and a barber. You must be of legal age to enter.","gate.yes":"Yes, I'm 18+","gate.no":"No","gate.sorry":"Sorry, this site is for adults only.",
+    "nav.home":"Home","nav.shop":"Shop","nav.bar":"Sports Bar","nav.resto":"Restaurant","nav.barber":"Barber","back":"← Back to home",
+    "intro.scroll":"Scroll","home.title":"Welcome to <span>High Times</span>","home.lead":"Cannabis shop, sports bar, restaurant and barber under one roof. Where do you want to go?",
     "door.shop.kind":"Cannabis Dispensary","door.shop.desc":"Reserve your products online, pick them up and pay at the counter.","door.shop.c1":"Flower","door.shop.c2":"Vapes","door.shop.c3":"Edibles","door.bar.desc":"One giant screen, 40+ TVs and every game live.","door.shop.title":"Shop","door.shop.l1":"See what's in store","door.shop.l2":"Reserve your items","door.shop.l3":"Pick up and pay at the counter","door.shop.go":"Reserve",
     "door.bar.kind":"Sports bar","door.bar.l1":"One giant screen and 40+ TVs","door.bar.l2":"Every game, live","door.bar.l3":"Hockey, football and UFC nights","door.bar.go":"See the bar",
     "info.open":"Open 7 days","info.age":"18+ only","info.lang":"Bilingual service","info.addr":"910 Rang Ste Philomène, Oka",
     "shop.title":"Reservations","shop.lead":"Pick your products, reserve them, then come pick them up. You pay at the counter, with ID.","shop.s1":"Add products to your reservation","shop.s2":"Enter your name and pickup time","shop.s3":"Show your code at the counter and pay there","shop.example":"Sample products and stock, to be replaced with the real inventory.",
-    "cart.title":"My reservation","search.ph":"Search for a product…","search.none":"No products found for","cart.btn":"Cart","cart.empty":"No products yet.","cart.name":"Name","cart.phone":"Phone","cart.when":"Pickup","cart.today":"Today","cart.tomorrow":"Tomorrow","cart.pick":"Choose a date…","cart.date":"Pickup date","cart.limit":"Up to 14 days ahead.","err.date":"Pick a day in the calendar (up to 14 days ahead).","cart.submit":"Reserve","cart.ok":"Reservation ready. Your code:","cart.new":"New reservation","cart.demo":"Demo version: the reservation is not sent to the store yet.",
+    "cart.title":"My reservation",
+    "door.resto.kind":"Restaurant","door.resto.desc":"Burgers, pizzas, wings and poutine to eat during the game.",
+    "door.barber.kind":"Barber shop","door.barber.title":"Barber","door.barber.desc":"Haircuts, fades and beard trims.","door.barber.c1":"Haircut","door.barber.c2":"Fade","door.barber.c3":"Beard",
+    "menu.bar.eyebrow":"At the bar","menu.bar.title":"What we serve","menu.note":"Sample list. Menu and prices to be confirmed.",
+    "resto.lead":"Food for the game: burgers, pizzas, chicken wings, poutine and more. Eat in or take out.",
+    "menu.resto.eyebrow":"The menu","menu.resto.title":"What we cook",
+    "barber.lead":"Haircuts, fades, beard trims and hot towel shaves, on site.",
+    "menu.barber.eyebrow":"Services","menu.barber.title":"What we offer","barber.note":"Sample list. Services, prices and booking to be confirmed.",
+    "price.tbc":"Price TBC","search.ph":"Search for a product…","search.none":"No products found for","cart.btn":"Cart","cart.empty":"No products yet.","cart.name":"Name","cart.phone":"Phone","cart.when":"Pickup","cart.today":"Today","cart.tomorrow":"Tomorrow","cart.pick":"Choose a date…","cart.date":"Pickup date","cart.limit":"Up to 14 days ahead.","err.date":"Pick a day in the calendar (up to 14 days ahead).","cart.submit":"Reserve","cart.ok":"Reservation ready. Your code:","cart.new":"New reservation","cart.demo":"Demo version: the reservation is not sent to the store yet.",
     "add":"Add","added":"Added ✓","stock.ok":"In stock","stock.low":"Few left",
     "err.empty":"Add at least one product.","err.name":"Enter your name.","err.phone":"Enter your phone number.",
     "about.eyebrow":"The bar","about.title":"Watch any game you want","about.p1":"One giant screen, 40+ TVs throughout the store and bar, and the sound of the game everyone's waiting for. Want a specific game? Ask at the bar and we'll put it on.",
@@ -613,7 +794,7 @@ const T = {
     "foot.txt":"Kanesatake · Oka · Québec. 18+ only. Consume responsibly.","foot.rights":"All rights reserved.","priv.text":"This site collects no personal data. Your age is asked on every visit and is not kept. Only your language choice stays in your browser."
   },
   fr:{"gate.sorry":"Désolé, ce site est réservé aux adultes.","add":"Ajouter","added":"Ajouté ✓","stock.ok":"En stock","stock.low":"Presque épuisé",
-    "err.empty":"Ajoute au moins un produit.","search.ph":"Rechercher un produit…","search.none":"Aucun produit trouvé pour","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone.","err.date":"Choisis une journée dans le calendrier (jusqu'à 14 jours d'avance)."}
+    "err.empty":"Ajoute au moins un produit.","price.tbc":"Prix à venir","search.ph":"Rechercher un produit…","search.none":"Aucun produit trouvé pour","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone.","err.date":"Choisis une journée dans le calendrier (jusqu'à 14 jours d'avance)."}
 };
 document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n; if(!(k in T.fr)) T.fr[k]=el.textContent;});
 document.querySelectorAll("[data-i18n-html]").forEach(el=>{T.fr[el.dataset.i18nHtml]=el.innerHTML;});
@@ -633,7 +814,7 @@ function apply(){
   document.querySelectorAll("[data-i18n-ph]").forEach(el=>{el.placeholder=t(el.dataset.i18nPh);el.setAttribute("aria-label",t(el.dataset.i18nPh));});
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
   const msg=document.getElementById("gate-msg"); if(msg.textContent) msg.textContent=t("gate.sorry");
-  renderShop(); renderConfirm(); if(!dateField.hidden) renderCal();
+  renderShop(); renderConfirm(); renderMenus(); if(!dateField.hidden) renderCal();
 }
 document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.l;store("ht-lang",lang);apply();}));
 
@@ -717,7 +898,7 @@ function renderConfirm(){
 document.getElementById("new-resa").addEventListener("click",()=>{lastResa=null;for(const k in cart)delete cart[k];form.reset();pickedDate=null;dateField.hidden=true;form.hidden=false;renderShop();renderConfirm();});
 
 /* ---------- Pages (hash) ---------- */
-const views=["accueil","boutique","bar"];
+const views=["accueil","boutique","bar","restaurant","barbier"];
 function route(){
   let v=location.hash.slice(1); if(!views.includes(v)) v="accueil";
   document.querySelectorAll("main[data-view]").forEach(m=>m.hidden=m.dataset.view!==v);
@@ -726,6 +907,7 @@ function route(){
   document.body.classList.toggle("has-page-bg", v==="boutique");
   document.querySelectorAll("nav a").forEach(a=>{ if(a.getAttribute("href")==="#"+v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   window.scrollTo(0,0);
+  const cur=document.querySelector('nav a[aria-current="page"]'); if(cur&&cur.scrollIntoView) cur.scrollIntoView({block:"nearest",inline:"center"});
   nav.classList.remove("open"); mb.setAttribute("aria-expanded","false");
   document.getElementById("cart-btn").hidden = v!=="boutique";
   if(v!=="boutique") closeCart();
