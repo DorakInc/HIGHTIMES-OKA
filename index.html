@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0d2a4a">
+<meta name="theme-color" content="#ffffff">
 <title>High Times Oka</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,18 +12,20 @@
 <style>
 :root{
   /* Layout: 3 views on the hash — #accueil (two big doors), #boutique (green, reservations), #bar (cyan, split EN|FR hero) */
-  --bg:#0d2a4a;      /* bleu marin tiré du logo */
-  --panel:#123459;
-  --line:#25507b;
+  --bg:#ffffff;      /* fond blanc */
+  --panel:#f3f6f9;
+  --line:#d8e1ea;
   --night:#06121a;   /* écran d'ouverture seulement */
-  --text:#eaf3f5;
-  --muted:#a8bdd2;
-  --cyan:#3cc8e4;
-  --green:#8be04e;
+  --text:#0d2a4a;
+  --muted:#4f6478;
+  --cyan:#0a85a8;
+  --green:#3a9a1f;
   --display:"Anton","Impact","Arial Narrow Bold",sans-serif;
   --body:"Archivo","Helvetica Neue",Arial,sans-serif;
-  color-scheme:dark;
+  color-scheme:light;
 }
+/* L'écran d'ouverture garde ses couleurs foncées */
+.intro{--text:#eaf3f5;--muted:#93aab3;--line:#1b3442;--cyan:#3cc8e4;--green:#8be04e;color:var(--text)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6}
 a{color:var(--cyan)}
@@ -123,25 +125,25 @@ section{padding:72px 0;border-top:1px solid var(--line)}
 /* Boutique: green glow + leaf pattern */
 .door.shop{border-top:4px solid var(--green)}
 .door.shop::before{background:
-  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cg fill='none' stroke='%238be04e' stroke-opacity='.14' stroke-width='1.6'%3E%3Cpath d='M45 70V40M45 40c-4-10-4-20 0-30 4 10 4 20 0 30zM45 44c-8-4-14-11-17-20 9 3 15 10 17 20zM45 44c8-4 14-11 17-20-9 3-15 10-17 20zM45 50c-9 0-17-4-22-10 9-1 17 3 22 10zM45 50c9 0 17-4 22-10-9-1-17 3-22 10z'/%3E%3C/g%3E%3C/svg%3E") top right/90px no-repeat,
-  #123d3f}
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cg fill='none' stroke='%233a9a1f' stroke-opacity='.25' stroke-width='1.6'%3E%3Cpath d='M45 70V40M45 40c-4-10-4-20 0-30 4 10 4 20 0 30zM45 44c-8-4-14-11-17-20 9 3 15 10 17 20zM45 44c8-4 14-11 17-20-9 3-15 10-17 20zM45 50c-9 0-17-4-22-10 9-1 17 3 22 10zM45 50c9 0 17-4 22-10-9-1-17 3-22 10z'/%3E%3C/g%3E%3C/svg%3E") top right/90px no-repeat,
+  #eef7e8}
 .door.shop:hover{border-color:var(--green)}
 /* Bar: stadium field + cyan beams */
 .door.sport{border-top:4px solid var(--cyan)}
 .door.sport::before{background:
-  radial-gradient(circle at 78% 30%,transparent 0 44px,rgba(60,200,228,.22) 45px 46px,transparent 47px),
-  linear-gradient(90deg,transparent calc(78% - 1px),rgba(60,200,228,.22) calc(78% - 1px) 78%,transparent 78%),
-  #133a63}
+  radial-gradient(circle at 78% 30%,transparent 0 44px,rgba(10,133,168,.25) 45px 46px,transparent 47px),
+  linear-gradient(90deg,transparent calc(78% - 1px),rgba(10,133,168,.25) calc(78% - 1px) 78%,transparent 78%),
+  #e9f3f9}
 .door.sport:hover{border-color:var(--cyan)}
-.door .kind{align-self:flex-start;font-weight:800;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:rgba(13,42,74,.85)}
+.door .kind{align-self:flex-start;font-weight:800;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;padding:5px 10px;border-radius:999px;background:#fff;border:1px solid var(--line)}
 .door.shop .kind{color:var(--green)}.door.sport .kind{color:var(--cyan)}
 .door h2{font-size:clamp(3rem,7vw,5rem);margin:0;line-height:.9}
 .door.shop h2{color:var(--green)}
 .door.sport h2{color:var(--cyan)}
-.door .desc{color:#c9d6db;font-size:.98rem;max-width:34ch}
+.door .desc{color:var(--muted);font-size:.98rem;max-width:34ch}
 .door .row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px}
 .door .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0}
-.door .chips span{font-size:.74rem;font-weight:700;padding:4px 9px;border-radius:999px;border:1px solid var(--line);background:rgba(13,42,74,.7)}
+.door .chips span{font-size:.74rem;font-weight:700;padding:4px 9px;border-radius:999px;border:1px solid var(--line);background:#fff}
 .door .arrow{flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:1.5rem;font-weight:800;transition:transform .2s}
 .door.shop .arrow{background:var(--green);color:var(--bg)}
 .door.sport .arrow{background:var(--cyan);color:var(--bg)}
@@ -186,8 +188,8 @@ a.landing-info-addr:hover{border-color:var(--cyan)}
 .prod h3{font-size:1.3rem;margin:0}
 .prod .meta{font-size:.85rem;color:var(--muted)}
 .stock{font-size:.75rem;font-weight:800;align-self:flex-start;padding:3px 8px;border-radius:999px}
-.stock.ok{background:rgba(139,224,78,.15);color:var(--green)}
-.stock.low{background:rgba(240,190,70,.15);color:#f0be46}
+.stock.ok{background:rgba(58,154,31,.12);color:var(--green)}
+.stock.low{background:rgba(240,170,40,.16);color:#9a6500}
 .prod button{margin-top:auto}
 .prod button[aria-pressed="true"]{background:none;color:var(--green)}
 .cart{position:fixed;top:0;right:0;z-index:60;height:100%;width:min(400px,100%);overflow-y:auto;background:var(--panel);border-left:1px solid var(--line);border-top:4px solid var(--green);padding:22px 22px 32px;transform:translateX(105%);transition:transform .25s ease,visibility 0s .25s;visibility:hidden}
@@ -218,10 +220,10 @@ a.landing-info-addr:hover{border-color:var(--cyan)}
 .cal-grid .wd{font-size:.68rem;font-weight:800;color:var(--muted);text-transform:uppercase}
 .cal-grid button{aspect-ratio:1;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:8px;font:700 .88rem var(--body);cursor:pointer;font-variant-numeric:tabular-nums}
 .cal-grid button:hover:not(:disabled){border-color:var(--green)}
-.cal-grid button:disabled{background:none;border-color:transparent;color:#4f6f91;cursor:default}
+.cal-grid button:disabled{background:none;border-color:transparent;color:#b7c4d1;cursor:default}
 .cal-grid button[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--bg)}
 .cal-grid button.today:not([aria-pressed="true"]){border-color:var(--cyan)}
-.form-err{color:#f0be46;font-size:.85rem;min-height:1.2em;margin-bottom:6px}
+.form-err{color:#9a6500;font-size:.85rem;min-height:1.2em;margin-bottom:6px}
 .confirm{border:1px solid var(--green);border-radius:10px;padding:16px;margin-top:4px;background:rgba(139,224,78,.07)}
 .confirm .code{font-family:var(--display);font-size:2.2rem;color:var(--green);letter-spacing:.06em;line-height:1.1}
 .demo{margin-top:14px;font-size:.8rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
@@ -273,7 +275,7 @@ tr.today td{color:var(--green);font-weight:800}
 .contact{display:grid;gap:12px}
 .contact div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
 .contact small{display:block;color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.14em}
-.back{display:inline-flex;gap:8px;align-items:center;color:var(--bg);background:var(--text);text-decoration:none;font-weight:800;font-size:1rem;letter-spacing:.02em;padding:11px 20px;border-radius:999px;margin-bottom:20px;box-shadow:0 4px 18px rgba(0,0,0,.35);transition:transform .15s,background .15s}
+.back{display:inline-flex;gap:8px;align-items:center;color:var(--bg);background:var(--text);text-decoration:none;font-weight:800;font-size:1rem;letter-spacing:.02em;padding:11px 20px;border-radius:999px;margin-bottom:20px;box-shadow:0 2px 8px rgba(13,42,74,.15);transition:transform .15s,background .15s}
 .back:hover{background:var(--green);transform:translateX(-3px)}
 [data-view="bar"] .back:hover{background:var(--cyan)}
 
@@ -284,7 +286,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
 .socials a{display:inline-flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;border:1px solid var(--line);padding:6px 12px;border-radius:999px;font-size:.85rem}
 
 /* Age gate */
-.gate{position:fixed;inset:0;z-index:100;background:rgba(8,28,50,.98);display:grid;place-items:center;padding:20px}
+.gate{position:fixed;inset:0;z-index:100;background:rgba(244,247,250,.98);display:grid;place-items:center;padding:20px}
 .gate-box{max-width:480px;text-align:center;border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:30px 26px}
 .gate-box .big-logo{width:120px;margin:0 auto}
 .gate-box h2{font-size:2.6rem;margin:14px 0 10px}
