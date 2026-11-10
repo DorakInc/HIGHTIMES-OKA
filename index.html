@@ -452,10 +452,10 @@ body.has-page-bg #visiter,body.has-page-bg footer{background:var(--bg)}
 .photo-hero img{width:100%;height:clamp(200px,42vw,440px);object-fit:cover}
 .v-boutique .photo-hero img{object-position:50% 60%}
 /* Photos en hauteur : pas trop larges sur ordinateur pour rester nettes */
-@media (min-width:761px){[data-view="bar"] .photo-hero{max-width:640px}[data-view="bar"] .photo-hero img{height:520px;object-position:50% 60%}}
+@media (min-width:761px){[data-view="bar"] .photo-hero img{height:clamp(380px,40vw,500px);object-position:50% 66%}}
+@media (max-width:760px){[data-view="bar"] .photo-hero img{height:320px;object-position:50% 66%}}
 .v-bar-hero h1{color:var(--cyan)}
 [data-view="bar"] .photo-hero{margin:18px 0 6px}
-[data-view="bar"] .photo-hero img{object-position:50% 72%;height:clamp(240px,46vw,480px)}
 .v-resto .photo-hero img{object-position:50% 55%}
 @media (max-width:760px){.photo-hero{border-radius:12px;margin:14px 0 4px}.photo-hero img{height:220px}}
 
