@@ -429,7 +429,9 @@ body.has-page-bg #visiter,body.has-page-bg footer{background:var(--bg)}
 .bk-step{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:18px 18px 20px;min-width:0}
 .bk-step legend{display:flex;align-items:center;gap:10px;font-weight:800;padding:0 6px}
 .bk-step legend b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--red);color:var(--bg);font-size:.9rem}
-.bk-barbers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bk-barbers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.bk-barbers .any .av{background:#000!important;display:grid;place-items:center;font-family:var(--display);font-size:2.4rem;color:var(--red)}
+@media (max-width:640px){.bk-barbers{grid-template-columns:repeat(2,1fr)}}
 .bk-barbers button{display:grid;justify-items:center;gap:8px;padding:16px 8px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer;font:700 .95rem var(--body)}
 .bk-barbers .av{overflow:hidden;width:72px;height:72px;border:2px solid rgba(54,170,196,.5);border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:1.5rem;background:repeating-linear-gradient(135deg,rgba(255,90,95,.35) 0 6px,rgba(234,243,245,.12) 6px 12px,rgba(60,130,228,.3) 12px 18px,transparent 18px 24px),#1c0f14;color:#fff}
 .bk-barbers small{font-weight:500;color:var(--muted);font-size:.78rem}
@@ -1034,7 +1036,7 @@ const T = {
     "bk.eyebrow":"Appointment","bk.title":"Book your appointment","bk.cta":"Book an appointment","bk.s1":"Choose your barber","bk.s2":"Choose the date","bk.s3":"Choose the time","bk.s4":"Choose the haircut","bk.s5":"Your details",
     "bk.men":"Men's haircut","bk.women":"Women's haircut","bk.beard":"Add a beard trim","bk.beardShort":"beard trim","bk.submit":"Book my appointment","bk.demo":"Demo version: the appointment is not sent to the barber shop yet.",
     "bk.ok":"Appointment booked. Your code:","bk.new":"Book another appointment","bk.tbc":"Name TBC","bk.pickdate":"Choose a date first.","bk.noslot":"No more times available this day. Choose another date.","bk.open":"Open","bk.last":"Last appointment 30 min before closing (or 11:30 p.m. at the latest).",
-    "bk.err.barber":"Choose a barber.","bk.err.date":"Choose a date.","bk.err.time":"Choose a time.","bk.err.cut":"Choose men's or women's haircut.","alt.shop":"Inside the High Times shop","alt.bar":"The giant screen at the High Times sports bar","alt.resto":"The High Times restaurant counter","sort.label":"Sort by","sort.pop":"Most popular","sort.new":"New arrivals","sort.asc":"Price: low to high","sort.desc":"Price: high to low","res.one":"product","res.many":"products","badge.new":"New","badge.top":"Popular","cart.total":"Total","cart.total.note":"You pay at the counter.","spec.color":"Colour","spec.nic":"Nicotine","spec.desc":"Description","photo.soon":"Photo coming soon","back.shop":"← Back to the shop","see.detail":"see details","qty":"Quantity",
+    "bk.err.barber":"Choose a barber.","bk.any":"Any barber","bk.anySub":"First available","bk.anyShort":"Any barber","bk.err.date":"Choose a date.","bk.err.time":"Choose a time.","bk.err.cut":"Choose men's or women's haircut.","alt.shop":"Inside the High Times shop","alt.bar":"The giant screen at the High Times sports bar","alt.resto":"The High Times restaurant counter","sort.label":"Sort by","sort.pop":"Most popular","sort.new":"New arrivals","sort.asc":"Price: low to high","sort.desc":"Price: high to low","res.one":"product","res.many":"products","badge.new":"New","badge.top":"Popular","cart.total":"Total","cart.total.note":"You pay at the counter.","spec.color":"Colour","spec.nic":"Nicotine","spec.desc":"Description","photo.soon":"Photo coming soon","back.shop":"← Back to the shop","see.detail":"see details","qty":"Quantity",
     "door.resto.kind":"Restaurant","door.resto.desc":"Burgers, pizzas, wings and poutine to eat during the game.",
     "door.barber.kind":"Barber shop","door.barber.title":"Barber","door.barber.desc":"Haircuts, fades and beard trims.","door.barber.c1":"Haircut","door.barber.c2":"Fade","door.barber.c3":"Beard",
     "menu.bar.eyebrow":"At the bar","menu.bar.title":"What we serve","menu.note":"Sample list. Menu and prices to be confirmed.",
@@ -1055,7 +1057,7 @@ const T = {
   },
   fr:{"gate.sorry":"Désolé, ce site est réservé aux adultes.","add":"Ajouter","added":"Ajouté ✓","stock.ok":"En stock","stock.low":"Presque épuisé",
     "err.empty":"Ajoute au moins un produit.","bk.beardShort":"taille de barbe","bk.tbc":"Nom à confirmer","bk.pickdate":"Choisis d'abord une date.","bk.noslot":"Plus d'heure disponible ce jour-là. Choisis une autre date.","bk.open":"Ouvert de","bk.last":"Dernier rendez-vous 30 min avant la fermeture (au plus tard 23 h 30).",
-    "bk.err.barber":"Choisis un barbier.","bk.err.date":"Choisis une date.","bk.err.time":"Choisis une heure.","bk.err.cut":"Choisis coupe homme ou coupe femme.","alt.shop":"L'intérieur de la boutique High Times","alt.bar":"L'écran géant du bar sportif High Times","alt.resto":"Le comptoir du restaurant High Times","res.one":"produit","res.many":"produits","badge.new":"Nouveau","badge.top":"Populaire","spec.color":"Couleur","spec.nic":"Nicotine","spec.desc":"Description","photo.soon":"Photo à venir","back.shop":"← Retour à la boutique","see.detail":"voir le détail","qty":"Quantité","price.tbc":"Prix à venir","search.ph":"Rechercher un produit…","search.none":"Aucun produit trouvé pour","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone.","err.date":"Choisis une journée dans le calendrier (jusqu'à 14 jours d'avance)."}
+    "bk.err.barber":"Choisis un barbier.","bk.any":"N'importe quel barbier","bk.anySub":"Le premier disponible","bk.anyShort":"N'importe quel barbier","bk.err.date":"Choisis une date.","bk.err.time":"Choisis une heure.","bk.err.cut":"Choisis coupe homme ou coupe femme.","alt.shop":"L'intérieur de la boutique High Times","alt.bar":"L'écran géant du bar sportif High Times","alt.resto":"Le comptoir du restaurant High Times","res.one":"produit","res.many":"produits","badge.new":"Nouveau","badge.top":"Populaire","spec.color":"Couleur","spec.nic":"Nicotine","spec.desc":"Description","photo.soon":"Photo à venir","back.shop":"← Retour à la boutique","see.detail":"voir le détail","qty":"Quantité","price.tbc":"Prix à venir","search.ph":"Rechercher un produit…","search.none":"Aucun produit trouvé pour","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone.","err.date":"Choisis une journée dans le calendrier (jusqu'à 14 jours d'avance)."}
 };
 document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n; if(!(k in T.fr)) T.fr[k]=el.textContent;});
 document.querySelectorAll("[data-i18n-html]").forEach(el=>{T.fr[el.dataset.i18nHtml]=el.innerHTML;});
@@ -1198,7 +1200,7 @@ function slotsFor(ds){
 }
 function bkLabelDate(ds){const [y,mo,d]=ds.split("-").map(Number);return new Date(y,mo-1,d).toLocaleDateString(lang==="fr"?"fr-CA":"en-CA",{weekday:"long",day:"numeric",month:"long"});}
 function renderBooking(){
-  bkEl("bk-barbers").innerHTML=BARBERS.map((b,i)=>`<button type="button" data-barber="${b.id}" aria-pressed="${bk.barber===b.id}"><span class="av" aria-hidden="true"><img src="img/highkuts.webp" alt=""></span>${b.name}<small>${t("bk.tbc")}</small></button>`).join("");
+  bkEl("bk-barbers").innerHTML=BARBERS.map((b,i)=>`<button type="button" data-barber="${b.id}" aria-pressed="${bk.barber===b.id}"><span class="av" aria-hidden="true"><img src="img/highkuts.webp" alt=""></span>${b.name}<small>${t("bk.tbc")}</small></button>`).join("")+`<button type="button" class="any" data-barber="any" aria-pressed="${bk.barber==="any"}"><span class="av" aria-hidden="true">?</span>${t("bk.any")}<small>${t("bk.anySub")}</small></button>`;
   bkEl("bk-cal").innerHTML=calHTML(bk.date);
   const sl=bkEl("bk-slots");
   if(!bk.date){ sl.innerHTML=`<p class="note empty">${t("bk.pickdate")}</p>`; bkEl("bk-hours-note").textContent=""; }
@@ -1213,7 +1215,7 @@ function renderBooking(){
   bkEl("bk-beard-wrap").hidden=bk.cut!=="homme";
   bkEl("bk-beard").checked=bk.beard;
   const parts=[];
-  if(bk.barber) parts.push(BARBERS.find(b=>b.id===bk.barber).name);
+  if(bk.barber) parts.push(bk.barber==="any"?t("bk.anyShort"):BARBERS.find(b=>b.id===bk.barber).name);
   if(bk.date) parts.push(bkLabelDate(bk.date));
   if(bk.time!==null) parts.push(hhmm(bk.time));
   if(bk.cut) parts.push(t(bk.cut==="homme"?"bk.men":"bk.women")+(bk.cut==="homme"&&bk.beard?" + "+t("bk.beardShort"):""));
