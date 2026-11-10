@@ -415,6 +415,38 @@ body.has-page-bg #visiter,body.has-page-bg footer{background:var(--bg)}
 .menu-note{margin-top:14px}
 @media (max-width:760px){.page-hero{padding:24px 0 22px}.menu{grid-template-columns:1fr}}
 
+/* Rendez-vous barbier */
+.bk{display:grid;gap:16px;margin-top:22px;max-width:860px}
+.bk-step{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:18px 18px 20px;min-width:0}
+.bk-step legend{display:flex;align-items:center;gap:10px;font-weight:800;padding:0 6px}
+.bk-step legend b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--red);color:var(--bg);font-size:.9rem}
+.bk-barbers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bk-barbers button{display:grid;justify-items:center;gap:8px;padding:16px 8px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer;font:700 .95rem var(--body)}
+.bk-barbers .av{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:1.5rem;background:repeating-linear-gradient(135deg,rgba(255,90,95,.35) 0 6px,rgba(234,243,245,.12) 6px 12px,rgba(60,130,228,.3) 12px 18px,transparent 18px 24px),#1c0f14;color:#fff}
+.bk-barbers small{font-weight:500;color:var(--muted);font-size:.78rem}
+.bk-barbers button[aria-pressed="true"],.bk-opts button[aria-pressed="true"]{border-color:var(--red);box-shadow:inset 0 0 0 2px var(--red);background:rgba(255,90,95,.1)}
+#bk-cal .cal-grid button[aria-pressed="true"]{background:var(--red);border-color:var(--red)}
+#bk-cal .cal-grid button:hover:not(:disabled){border-color:var(--red)}
+#bk-cal .cal-month{color:var(--red)}
+.bk-slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+.bk-slots button{padding:10px 4px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:700 .9rem var(--body);cursor:pointer;font-variant-numeric:tabular-nums}
+.bk-slots button[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:var(--bg)}
+.bk-slots .empty{grid-column:1/-1;margin:0}
+.bk-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bk-opts button{padding:16px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:800 1rem var(--body);cursor:pointer}
+.bk-beard{display:flex;align-items:center;gap:10px;margin-top:12px;padding:14px;border-radius:12px;border:1px dashed var(--red);cursor:pointer;font-weight:700}
+.bk-beard input{width:20px;height:20px;accent-color:var(--red)}
+.bk-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bk-summary{border-left:4px solid var(--red);padding:10px 14px;background:rgba(255,90,95,.07);border-radius:0 10px 10px 0;color:var(--text)}
+.bk-summary:empty{display:none}
+.bk-submit,.bk-cta{background:var(--red);border-color:var(--red);color:var(--bg)}
+.bk-submit{width:100%;max-width:860px;font-size:1rem;padding:15px}
+.bk-cta{margin-top:16px}
+.bk-done{margin-top:22px;max-width:860px;border:1px solid var(--red);border-radius:14px;padding:22px;background:rgba(255,90,95,.07)}
+.bk-done .code{font-family:var(--display);font-size:2.6rem;color:var(--red);letter-spacing:.06em}
+.bk-done p{margin:6px 0 14px}
+@media (max-width:640px){.bk-barbers{gap:8px}.bk-barbers button{padding:12px 4px}.bk-barbers .av{width:46px;height:46px}.bk-fields{grid-template-columns:1fr}.bk-step{padding:14px}}
+
 /* Photos de section */
 .photo-hero{margin:18px 0 6px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--panel);box-shadow:0 18px 40px rgba(0,0,0,.35)}
 .photo-hero img{width:100%;height:clamp(200px,42vw,440px);object-fit:cover}
@@ -748,6 +780,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
       <div class="eyebrow" data-i18n="door.barber.kind">Salon de barbier</div>
       <h1 data-i18n="door.barber.title">Barbier</h1>
       <p class="lead" data-i18n="barber.lead">Coupes, dégradés, taille de barbe et rasage à la serviette chaude, sur place.</p>
+      <a class="btn bk-cta" href="#barbier" id="bk-cta" data-i18n="bk.cta">Prendre rendez-vous</a>
     </div>
   </div>
   <div class="marquee red" aria-hidden="true"><div class="track"><span>Coupe · Dégradé · Barbe · Rasage · Fade · Cut · Beard · Shave · </span><span>Coupe · Dégradé · Barbe · Rasage · Fade · Cut · Beard · Shave · </span><span>Coupe · Dégradé · Barbe · Rasage · Fade · Cut · Beard · Shave · </span></div></div>
@@ -756,7 +789,53 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
       <div class="eyebrow" data-i18n="menu.barber.eyebrow">Services</div>
       <h2 data-i18n="menu.barber.title">Ce qu'on offre</h2>
       <div class="menu" data-menu="barbier"></div>
-      <p class="note menu-note" data-i18n="barber.note">Liste d'exemple. Les services, les prix et la prise de rendez-vous seront confirmés.</p>
+      <p class="note menu-note" data-i18n="barber.note">Liste d'exemple. Les services et les prix seront confirmés.</p>
+    </div>
+  </section>
+  <section id="rdv">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="bk.eyebrow">Rendez-vous</div>
+      <h2 data-i18n="bk.title">Prends ton rendez-vous</h2>
+      <form class="bk" id="bk" novalidate>
+        <fieldset class="bk-step">
+          <legend><b>1</b><span data-i18n="bk.s1">Choisis ton barbier</span></legend>
+          <div class="bk-barbers" id="bk-barbers"></div>
+        </fieldset>
+        <fieldset class="bk-step">
+          <legend><b>2</b><span data-i18n="bk.s2">Choisis la date</span></legend>
+          <div class="cal" id="bk-cal"></div>
+        </fieldset>
+        <fieldset class="bk-step">
+          <legend><b>3</b><span data-i18n="bk.s3">Choisis l'heure</span></legend>
+          <div class="bk-slots" id="bk-slots"></div>
+          <p class="note" id="bk-hours-note"></p>
+        </fieldset>
+        <fieldset class="bk-step">
+          <legend><b>4</b><span data-i18n="bk.s4">Choisis la coupe</span></legend>
+          <div class="bk-opts" id="bk-cut">
+            <button type="button" data-cut="homme" aria-pressed="false" data-i18n="bk.men">Coupe homme</button>
+            <button type="button" data-cut="femme" aria-pressed="false" data-i18n="bk.women">Coupe femme</button>
+          </div>
+          <label class="bk-beard" id="bk-beard-wrap" hidden><input type="checkbox" id="bk-beard"> <span data-i18n="bk.beard">Ajouter une taille de barbe</span></label>
+        </fieldset>
+        <fieldset class="bk-step">
+          <legend><b>5</b><span data-i18n="bk.s5">Tes coordonnées</span></legend>
+          <div class="bk-fields">
+            <div class="field"><label for="bk-name" data-i18n="cart.name">Nom</label><input id="bk-name" autocomplete="name"></div>
+            <div class="field"><label for="bk-phone" data-i18n="cart.phone">Téléphone</label><input id="bk-phone" type="tel" autocomplete="tel"></div>
+          </div>
+        </fieldset>
+        <div class="bk-summary" id="bk-summary"></div>
+        <p class="form-err" id="bk-err" aria-live="polite"></p>
+        <button class="btn bk-submit" type="submit" data-i18n="bk.submit">Réserver mon rendez-vous</button>
+        <p class="demo" data-i18n="bk.demo">Version démo : le rendez-vous n'est pas encore envoyé au salon.</p>
+      </form>
+      <div class="bk-done" id="bk-done" hidden>
+        <div class="note" data-i18n="bk.ok">Rendez-vous réservé. Ton code :</div>
+        <div class="code" id="bk-code"></div>
+        <p id="bk-done-txt"></p>
+        <button class="btn ghost" type="button" id="bk-new" data-i18n="bk.new">Prendre un autre rendez-vous</button>
+      </div>
     </div>
   </section>
 </main>
@@ -937,14 +1016,18 @@ const T = {
     "door.bar.kind":"Sports bar","door.bar.l1":"One giant screen and 40+ TVs","door.bar.l2":"Every game, live","door.bar.l3":"Hockey, football and UFC nights","door.bar.go":"See the bar",
     "info.open":"Open 7 days","info.age":"18+ only","info.lang":"Bilingual service","info.addr":"910 Rang Ste Philomène, Oka",
     "shop.title":"Reservations","shop.lead":"Pick your products, reserve them, then come pick them up. You pay at the counter, with ID.","shop.s1":"Add products to your reservation","shop.s2":"In the cart, enter your name and pickup date","shop.s3":"Show your code at the counter and pay there","shop.example":"Sample products, prices and stock, to be replaced with the real inventory.",
-    "cart.title":"My reservation","alt.shop":"Inside the High Times shop","alt.bar":"The giant screen at the High Times sports bar","alt.resto":"The High Times restaurant counter","sort.label":"Sort by","sort.pop":"Most popular","sort.new":"New arrivals","sort.asc":"Price: low to high","sort.desc":"Price: high to low","res.one":"product","res.many":"products","badge.new":"New","badge.top":"Popular","cart.total":"Total","cart.total.note":"You pay at the counter.","spec.color":"Colour","spec.nic":"Nicotine","spec.desc":"Description","photo.soon":"Photo coming soon","back.shop":"← Back to the shop","see.detail":"see details","qty":"Quantity",
+    "cart.title":"My reservation",
+    "bk.eyebrow":"Appointment","bk.title":"Book your appointment","bk.cta":"Book an appointment","bk.s1":"Choose your barber","bk.s2":"Choose the date","bk.s3":"Choose the time","bk.s4":"Choose the haircut","bk.s5":"Your details",
+    "bk.men":"Men's haircut","bk.women":"Women's haircut","bk.beard":"Add a beard trim","bk.beardShort":"beard trim","bk.submit":"Book my appointment","bk.demo":"Demo version: the appointment is not sent to the barber shop yet.",
+    "bk.ok":"Appointment booked. Your code:","bk.new":"Book another appointment","bk.tbc":"Name TBC","bk.pickdate":"Choose a date first.","bk.noslot":"No more times available this day. Choose another date.","bk.open":"Open","bk.last":"Last appointment 30 min before closing (or 11:30 p.m. at the latest).",
+    "bk.err.barber":"Choose a barber.","bk.err.date":"Choose a date.","bk.err.time":"Choose a time.","bk.err.cut":"Choose men's or women's haircut.","alt.shop":"Inside the High Times shop","alt.bar":"The giant screen at the High Times sports bar","alt.resto":"The High Times restaurant counter","sort.label":"Sort by","sort.pop":"Most popular","sort.new":"New arrivals","sort.asc":"Price: low to high","sort.desc":"Price: high to low","res.one":"product","res.many":"products","badge.new":"New","badge.top":"Popular","cart.total":"Total","cart.total.note":"You pay at the counter.","spec.color":"Colour","spec.nic":"Nicotine","spec.desc":"Description","photo.soon":"Photo coming soon","back.shop":"← Back to the shop","see.detail":"see details","qty":"Quantity",
     "door.resto.kind":"Restaurant","door.resto.desc":"Burgers, pizzas, wings and poutine to eat during the game.",
     "door.barber.kind":"Barber shop","door.barber.title":"Barber","door.barber.desc":"Haircuts, fades and beard trims.","door.barber.c1":"Haircut","door.barber.c2":"Fade","door.barber.c3":"Beard",
     "menu.bar.eyebrow":"At the bar","menu.bar.title":"What we serve","menu.note":"Sample list. Menu and prices to be confirmed.",
     "resto.lead":"Food for the game: burgers, pizzas, chicken wings, poutine and more. Eat in or take out.",
     "menu.resto.eyebrow":"The menu","menu.resto.title":"What we cook",
     "barber.lead":"Haircuts, fades, beard trims and hot towel shaves, on site.",
-    "menu.barber.eyebrow":"Services","menu.barber.title":"What we offer","barber.note":"Sample list. Services, prices and booking to be confirmed.",
+    "menu.barber.eyebrow":"Services","menu.barber.title":"What we offer","barber.note":"Sample list. Services and prices to be confirmed.",
     "price.tbc":"Price TBC","search.ph":"Search for a product…","search.none":"No products found for","cart.btn":"Cart","cart.empty":"No products yet.","cart.name":"Name","cart.phone":"Phone","cart.when":"Pickup","cart.today":"Today","cart.tomorrow":"Tomorrow","cart.pick":"Choose a date…","cart.date":"Pickup date","cart.limit":"Up to 14 days ahead.","err.date":"Pick a day in the calendar (up to 14 days ahead).","cart.submit":"Reserve","cart.ok":"Reservation ready. Your code:","cart.new":"New reservation","cart.demo":"Demo version: the reservation is not sent to the store yet.",
     "add":"Add","added":"Added ✓","stock.ok":"In stock","stock.low":"Few left",
     "err.empty":"Add at least one product.","err.name":"Enter your name.","err.phone":"Enter your phone number.",
@@ -957,7 +1040,8 @@ const T = {
     "foot.txt":"Kanesatake · Oka · Québec. 18+ only. Consume responsibly.","foot.rights":"All rights reserved.","priv.text":"This site collects no personal data. Your age is asked on every visit and is not kept. Only your language choice stays in your browser."
   },
   fr:{"gate.sorry":"Désolé, ce site est réservé aux adultes.","add":"Ajouter","added":"Ajouté ✓","stock.ok":"En stock","stock.low":"Presque épuisé",
-    "err.empty":"Ajoute au moins un produit.","alt.shop":"L'intérieur de la boutique High Times","alt.bar":"L'écran géant du bar sportif High Times","alt.resto":"Le comptoir du restaurant High Times","res.one":"produit","res.many":"produits","badge.new":"Nouveau","badge.top":"Populaire","spec.color":"Couleur","spec.nic":"Nicotine","spec.desc":"Description","photo.soon":"Photo à venir","back.shop":"← Retour à la boutique","see.detail":"voir le détail","qty":"Quantité","price.tbc":"Prix à venir","search.ph":"Rechercher un produit…","search.none":"Aucun produit trouvé pour","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone.","err.date":"Choisis une journée dans le calendrier (jusqu'à 14 jours d'avance)."}
+    "err.empty":"Ajoute au moins un produit.","bk.beardShort":"taille de barbe","bk.tbc":"Nom à confirmer","bk.pickdate":"Choisis d'abord une date.","bk.noslot":"Plus d'heure disponible ce jour-là. Choisis une autre date.","bk.open":"Ouvert de","bk.last":"Dernier rendez-vous 30 min avant la fermeture (au plus tard 23 h 30).",
+    "bk.err.barber":"Choisis un barbier.","bk.err.date":"Choisis une date.","bk.err.time":"Choisis une heure.","bk.err.cut":"Choisis coupe homme ou coupe femme.","alt.shop":"L'intérieur de la boutique High Times","alt.bar":"L'écran géant du bar sportif High Times","alt.resto":"Le comptoir du restaurant High Times","res.one":"produit","res.many":"produits","badge.new":"Nouveau","badge.top":"Populaire","spec.color":"Couleur","spec.nic":"Nicotine","spec.desc":"Description","photo.soon":"Photo à venir","back.shop":"← Retour à la boutique","see.detail":"voir le détail","qty":"Quantité","price.tbc":"Prix à venir","search.ph":"Rechercher un produit…","search.none":"Aucun produit trouvé pour","err.name":"Entre ton nom.","err.phone":"Entre ton numéro de téléphone.","err.date":"Choisis une journée dans le calendrier (jusqu'à 14 jours d'avance)."}
 };
 document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n; if(!(k in T.fr)) T.fr[k]=el.textContent;});
 document.querySelectorAll("[data-i18n-html]").forEach(el=>{T.fr[el.dataset.i18nHtml]=el.innerHTML;});
@@ -980,7 +1064,7 @@ function apply(){
   document.querySelectorAll("[data-i18n-ph]").forEach(el=>{el.placeholder=t(el.dataset.i18nPh);el.setAttribute("aria-label",t(el.dataset.i18nPh));});
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
   const msg=document.getElementById("gate-msg"); if(msg.textContent) msg.textContent=t("gate.sorry");
-  renderShop(); renderConfirm(); renderMenus(); if(!dateField.hidden) renderCal();
+  renderShop(); renderConfirm(); renderMenus(); if(!dateField.hidden) renderCal(); if(typeof renderBooking==="function") renderBooking();
 }
 document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.l;store("ht-lang",lang);apply();}));
 
@@ -1037,7 +1121,8 @@ let pickedDate=null;
 function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
 function addDays(n){const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+n);return d;}
 const MAX_DAYS=14;
-function renderCal(){
+function renderCal(){ calEl.innerHTML=calHTML(pickedDate); }
+function calHTML(selected){
   const first=addDays(0), last=addDays(MAX_DAYS), minS=ymd(first), maxS=ymd(last), loc=lang==="fr"?"fr-CA":"en-CA";
   const wds=lang==="fr"?["D","L","M","M","J","V","S"]:["S","M","T","W","T","F","S"];
   let html="", cur=new Date(first.getFullYear(),first.getMonth(),1,12);
@@ -1048,11 +1133,11 @@ function renderCal(){
     for(let d=1;d<=days;d++){
       const ds=ymd(new Date(y,m,d,12)), ok=ds>=minS&&ds<=maxS;
       const label=new Date(y,m,d,12).toLocaleDateString(loc,{weekday:"long",day:"numeric",month:"long"});
-      html+=`<button type="button" data-d="${ds}" ${ok?"":"disabled"} aria-pressed="${pickedDate===ds}" aria-label="${label}" class="${ds===minS?"today":""}">${d}</button>`;
+      html+=`<button type="button" data-d="${ds}" ${ok?"":"disabled"} aria-pressed="${selected===ds}" aria-label="${label}" class="${ds===minS?"today":""}">${d}</button>`;
     }
     html+="</div>"; cur=new Date(y,m+1,1,12);
   }
-  calEl.innerHTML=html;
+  return html;
 }
 calEl.addEventListener("click",e=>{const b=e.target.closest("button[data-d]"); if(!b||b.disabled)return; pickedDate=b.dataset.d; err.textContent=""; renderCal(); calEl.querySelector(`[data-d="${pickedDate}"]`).focus();});
 whenSel.addEventListener("change",()=>{const show=whenSel.value==="date";dateField.hidden=!show;if(show){pickedDate=null;renderCal();const b=calEl.querySelector("button:not(:disabled)");if(b)b.focus();}});
@@ -1081,6 +1166,67 @@ function renderConfirm(){
     : `${lastResa.name} · ${lastResa.count} item(s) · ${money(lastResa.total)} · for ${when}. Show this code at the counter.`;
 }
 document.getElementById("new-resa").addEventListener("click",()=>{lastResa=null;for(const k in cart)delete cart[k];form.reset();pickedDate=null;dateField.hidden=true;form.hidden=false;renderShop();renderConfirm();});
+
+/* ---------- Rendez-vous barbier ---------- */
+/* Heures d'ouverture (exemple) : [ouverture, fermeture] en heures; 24 = minuit, 25 = 1 h du matin. Doit suivre le tableau des heures. */
+const HOURS={0:[11,23],1:[11,23],2:[11,23],3:[11,23],4:[11,24],5:[11,25],6:[11,25]};
+const BARBERS=[{id:"b1",name:"Barbier 1"},{id:"b2",name:"Barbier 2"},{id:"b3",name:"Barbier 3"}];
+const SLOT_MIN=30;
+const bk={barber:null,date:null,time:null,cut:null,beard:false,done:null};
+const bkEl=id=>document.getElementById(id);
+function hhmm(m){const h=Math.floor(m/60)%24, mm=m%60; if(lang==="fr"&&h===0&&mm===0) return "minuit"; return lang==="fr"? `${h} h ${String(mm).padStart(2,"0")}` : new Date(2000,0,1,h,mm).toLocaleTimeString("en-CA",{hour:"numeric",minute:"2-digit"});}
+function slotsFor(ds){
+  const d=new Date(ds+"T12:00:00"), [o,c]=HOURS[d.getDay()];
+  const end=Math.min(c,24)*60-SLOT_MIN;   /* dernier rendez-vous 30 min avant la fermeture (ou avant minuit) */
+  const out=[]; const now=new Date(); const isToday=ds===ymd(now); const nowMin=now.getHours()*60+now.getMinutes()+30;
+  for(let m=o*60;m<=end;m+=SLOT_MIN){ if(isToday && m<nowMin) continue; out.push(m); }
+  return out;
+}
+function bkLabelDate(ds){const [y,mo,d]=ds.split("-").map(Number);return new Date(y,mo-1,d).toLocaleDateString(lang==="fr"?"fr-CA":"en-CA",{weekday:"long",day:"numeric",month:"long"});}
+function renderBooking(){
+  bkEl("bk-barbers").innerHTML=BARBERS.map((b,i)=>`<button type="button" data-barber="${b.id}" aria-pressed="${bk.barber===b.id}"><span class="av" aria-hidden="true">${i+1}</span>${b.name}<small>${t("bk.tbc")}</small></button>`).join("");
+  bkEl("bk-cal").innerHTML=calHTML(bk.date);
+  const sl=bkEl("bk-slots");
+  if(!bk.date){ sl.innerHTML=`<p class="note empty">${t("bk.pickdate")}</p>`; bkEl("bk-hours-note").textContent=""; }
+  else{
+    const list=slotsFor(bk.date);
+    if(bk.time!==null && !list.includes(bk.time)) bk.time=null;
+    sl.innerHTML=list.length? list.map(m=>`<button type="button" data-time="${m}" aria-pressed="${bk.time===m}">${hhmm(m)}</button>`).join("") : `<p class="note empty">${t("bk.noslot")}</p>`;
+    const [o,c]=HOURS[new Date(bk.date+"T12:00:00").getDay()];
+    bkEl("bk-hours-note").textContent=t("bk.open")+" "+hhmm(o*60)+(lang==="fr"?" à ":" – ")+hhmm(c*60)+". "+t("bk.last");
+  }
+  document.querySelectorAll("#bk-cut [data-cut]").forEach(b=>b.setAttribute("aria-pressed",bk.cut===b.dataset.cut));
+  bkEl("bk-beard-wrap").hidden=bk.cut!=="homme";
+  bkEl("bk-beard").checked=bk.beard;
+  const parts=[];
+  if(bk.barber) parts.push(BARBERS.find(b=>b.id===bk.barber).name);
+  if(bk.date) parts.push(bkLabelDate(bk.date));
+  if(bk.time!==null) parts.push(hhmm(bk.time));
+  if(bk.cut) parts.push(t(bk.cut==="homme"?"bk.men":"bk.women")+(bk.cut==="homme"&&bk.beard?" + "+t("bk.beardShort"):""));
+  bkEl("bk-summary").textContent=parts.join(" · ");
+  if(bk.done){
+    bkEl("bk").hidden=true; bkEl("bk-done").hidden=false;
+    bkEl("bk-code").textContent=bk.done.code;
+    bkEl("bk-done-txt").textContent=(lang==="fr"?`${bk.done.name}, ton rendez-vous avec ${bk.done.summary}. Montre ce code à ton arrivée.`:`${bk.done.name}, your appointment with ${bk.done.summary}. Show this code when you arrive.`);
+  } else { bkEl("bk").hidden=false; bkEl("bk-done").hidden=true; }
+}
+bkEl("bk-barbers").addEventListener("click",e=>{const b=e.target.closest("[data-barber]"); if(!b)return; bk.barber=b.dataset.barber; bkEl("bk-err").textContent=""; renderBooking();});
+bkEl("bk-cal").addEventListener("click",e=>{const b=e.target.closest("button[data-d]"); if(!b||b.disabled)return; bk.date=b.dataset.d; bkEl("bk-err").textContent=""; renderBooking(); bkEl("bk-slots").scrollIntoView({block:"nearest",behavior:"smooth"});});
+bkEl("bk-slots").addEventListener("click",e=>{const b=e.target.closest("[data-time]"); if(!b)return; bk.time=Number(b.dataset.time); bkEl("bk-err").textContent=""; renderBooking();});
+bkEl("bk-cut").addEventListener("click",e=>{const b=e.target.closest("[data-cut]"); if(!b)return; bk.cut=b.dataset.cut; if(bk.cut!=="homme") bk.beard=false; bkEl("bk-err").textContent=""; renderBooking();});
+bkEl("bk-beard").addEventListener("change",e=>{bk.beard=e.target.checked; renderBooking();});
+bkEl("bk-cta").addEventListener("click",e=>{e.preventDefault(); bkEl("rdv").scrollIntoView({behavior:"smooth"});});
+bkEl("bk").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=bkEl("bk-name").value.trim(), phone=bkEl("bk-phone").value.trim(), er=bkEl("bk-err");
+  const miss=!bk.barber?"bk.err.barber":!bk.date?"bk.err.date":bk.time===null?"bk.err.time":!bk.cut?"bk.err.cut":!name?"err.name":phone.replace(/\D/g,"").length<10?"err.phone":null;
+  if(miss){ er.textContent=t(miss); return; }
+  if(!slotsFor(bk.date).includes(bk.time)){ er.textContent=t("bk.err.time"); renderBooking(); return; }
+  er.textContent="";
+  bk.done={code:"BB-"+Math.floor(1000+Math.random()*9000), name, summary:bkEl("bk-summary").textContent};
+  renderBooking(); bkEl("rdv").scrollIntoView({behavior:"smooth"});
+});
+bkEl("bk-new").addEventListener("click",()=>{Object.assign(bk,{barber:null,date:null,time:null,cut:null,beard:false,done:null}); bkEl("bk").reset(); renderBooking();});
 
 /* ---------- Pages (hash) ---------- */
 const views=["accueil","boutique","bar","restaurant","barbier"];
