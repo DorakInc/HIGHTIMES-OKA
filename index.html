@@ -180,6 +180,9 @@ section{padding:72px 0;border-top:1px solid var(--line)}
 .door.sport::before{background:linear-gradient(180deg,rgba(6,18,26,.1) 0%,rgba(6,18,26,.68) 45%,rgba(6,18,26,.95) 85%),url("img/sportbar.webp") 50% 62%/cover no-repeat,#071b26}
 .door.food::before{background:linear-gradient(180deg,rgba(6,18,26,.15) 0%,rgba(6,18,26,.68) 45%,rgba(6,18,26,.95) 85%),url("img/restaurant.webp") 50% 50%/cover no-repeat,#22170a}
 .door .kind{box-shadow:0 2px 10px rgba(0,0,0,.4)}
+.door.barber::before{background:url("img/highkuts.webp") right 22px top 22px/auto 50% no-repeat,#000}
+.door.barber{box-shadow:inset 0 0 0 1px rgba(54,170,196,.3)}
+@media (max-width:760px){.door.barber::before{background:linear-gradient(180deg,rgba(0,0,0,0) 38%,rgba(0,0,0,.9) 52%),url("img/highkuts.webp") center 16px/auto 40% no-repeat,#000}.door.barber{min-height:410px}}
 .door h2{font-size:clamp(2.6rem,5.2vw,4.4rem);overflow-wrap:anywhere;margin:0;line-height:.9}
 .door.shop h2{color:var(--green);text-shadow:0 0 30px rgba(139,224,78,.35)}
 .door.sport h2{color:transparent;-webkit-text-stroke:2px var(--cyan);text-shadow:0 0 24px rgba(60,200,228,.5)}
@@ -458,6 +461,10 @@ body.has-page-bg #visiter,body.has-page-bg footer{background:var(--bg)}
 [data-view="bar"] .photo-hero{margin:18px 0 6px}
 .v-resto .photo-hero img{object-position:50% 55%}
 @media (max-width:760px){.photo-hero{border-radius:12px;margin:14px 0 4px}.photo-hero img{height:220px}}
+
+.kuts-hero{background:#000;border-color:rgba(54,170,196,.35)}
+.kuts-hero img{object-fit:contain;height:clamp(300px,38vw,460px);padding:18px 0}
+@media (max-width:760px){.kuts-hero img{height:300px;padding:14px 0}}
 
 /* Visit (shared) */
 .visit{display:grid;grid-template-columns:1fr 1fr;gap:40px}
@@ -777,8 +784,9 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
   <div class="page-hero">
     <div class="wrap">
       <a href="#accueil" class="back" data-i18n="back">← Retour à l'accueil</a>
-      <div class="eyebrow" data-i18n="door.barber.kind">Salon de barbier</div>
+      <div class="eyebrow">High Kuts Barbershop</div>
       <h1 data-i18n="door.barber.title">Barbier</h1>
+      <figure class="photo-hero kuts-hero"><img src="img/highkuts.webp" alt="Logo High Kuts Barbershop" width="1176" height="1509" loading="eager"></figure>
       <p class="lead" data-i18n="barber.lead">Coupes, dégradés, taille de barbe et rasage à la serviette chaude, sur place.</p>
       <a class="btn bk-cta" href="#barbier" id="bk-cta" data-i18n="bk.cta">Prendre rendez-vous</a>
     </div>
