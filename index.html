@@ -436,6 +436,8 @@ td:last-child{text-align:right;color:var(--muted)}
 tr.today td{color:var(--green);font-weight:800}
 .contact{display:grid;gap:12px}
 .contact div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.contact a.tel{color:var(--text);font-weight:700;text-decoration:none;font-variant-numeric:tabular-nums}
+.contact a.tel:hover{color:var(--green)}
 .contact small{display:block;color:var(--muted);font-size:.76rem;text-transform:uppercase;letter-spacing:.14em}
 .back{display:inline-flex;gap:8px;align-items:center;color:var(--bg);background:var(--text);text-decoration:none;font-weight:800;font-size:1rem;letter-spacing:.02em;padding:11px 20px;border-radius:999px;margin-bottom:20px;box-shadow:0 4px 18px rgba(0,0,0,.35);transition:transform .15s,background .15s}
 .back:hover{background:var(--green);transform:translateX(-3px)}
@@ -560,6 +562,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
       <div class="landing-info">
         <span><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-i18n="info.open">Ouvert 7 jours</span></span>
         <span><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 10h4M7 14h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span data-i18n="info.age">18 ans et plus</span></span>
+        <a class="landing-info-addr" href="tel:+15142953093"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>(514) 295-3093</span></a>
         <a class="landing-info-addr" href="https://www.google.com/maps/search/?api=1&query=910+Rang+Ste+Philom%C3%A8ne%2C+Oka%2C+QC+J0N+1E0" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9.5" r="2.5" fill="currentColor"/></svg><span data-i18n="info.addr">910 Rang Ste Philomène, Oka</span></a>
       </div>
       <div class="landing-social">
@@ -778,7 +781,7 @@ footer{border-top:1px solid var(--line);padding:36px 0 56px;color:var(--muted);f
       </div>
       <div class="contact">
         <div><small data-i18n="v.addr">Adresse</small><span data-i18n="v.addrv">910 Rang Ste Philomène, Oka, QC J0N 1E0</span></div>
-        <div><small data-i18n="v.phone">Téléphone</small><span data-i18n="v.tbc">À confirmer</span></div>
+        <div><small data-i18n="v.phone">Téléphone</small><a class="tel" href="tel:+15142953093">(514) 295-3093</a></div>
         <div><small data-i18n="v.mail">Courriel</small><span data-i18n="v.tbc">À confirmer</span></div>
         <a class="btn g" style="text-align:center" href="https://www.google.com/maps/search/?api=1&query=910+Rang+Ste+Philom%C3%A8ne%2C+Oka%2C+QC+J0N+1E0" target="_blank" rel="noopener" data-i18n="v.map">Ouvrir dans Google Maps</a>
       </div>
